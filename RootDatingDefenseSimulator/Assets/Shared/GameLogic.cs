@@ -15,6 +15,10 @@ public class GameLogic : MonoBehaviourPunCallbacks {
 
     private bool mainPlayersAssigned = false;
 
+    private void Awake() {
+        PhotonNetwork.IsMessageQueueRunning = false;
+    }
+
     private void Start() {
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -84,6 +88,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
         forest.Init(GameOverRPC);
         towerDefensor.Init();
         UI.Initialize();
+        PhotonNetwork.IsMessageQueueRunning = true;
     }
 
     private void OnGameOver() {
