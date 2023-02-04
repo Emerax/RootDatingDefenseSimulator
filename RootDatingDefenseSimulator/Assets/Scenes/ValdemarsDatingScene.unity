@@ -380,34 +380,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DatingUI
       objectReference: {fileID: 0}
-    - target: {fileID: 5362149987702877946, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5362149987702877946, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 75.89
-      objectReference: {fileID: 0}
-    - target: {fileID: 5362149987702877946, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -37.945
-      objectReference: {fileID: 0}
-    - target: {fileID: 6515153392877669482, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
-      propertyPath: treePrefab
-      value: 
-      objectReference: {fileID: 8004438435003585563, guid: 9dea075e8c21a64458a6cc17d4fb1263, type: 3}
-    - target: {fileID: 6515153392877669482, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
-      propertyPath: debugRandomizeFaces.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6515153392877669482, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
-      propertyPath: debugRandomizeFaces.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: fcea477db14aa2a42887763ea921fb04, type: 3}
-    - target: {fileID: 6515153392877669482, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
-      propertyPath: debugRandomizeFaces.Array.data[1]
-      value: 
-      objectReference: {fileID: 21300000, guid: 92663e9978c5e9949a075c65e67ac5c2, type: 3}
     - target: {fileID: 7361018428327668472, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
       propertyPath: m_Pivot.x
       value: 0

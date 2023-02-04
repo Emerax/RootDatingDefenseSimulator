@@ -37,7 +37,10 @@ public class DatingHandler : MonoBehaviour
             TreeProfilePicture newChar = Instantiate(treePrefab, availableTreeList.transform);
             newChar.faceImage.sprite = debugRandomizeFaces[Random.Range(0, debugRandomizeFaces.Length)];
             characters.Add(newChar);
-            newChar.Initialize(this);
+            
+            //Apparently i is a pointer, so let's exorcise that little guy.
+            int integerPointerExorcist = i;
+            newChar.selectTreeButton.onClick.AddListener(delegate { SelectTree(integerPointerExorcist); });
         }
 
         for (int i = 0; i < selectedProfiles.Length; i++)
@@ -54,12 +57,23 @@ public class DatingHandler : MonoBehaviour
     /// Selected trees are available for dating.
     /// </summary>
     /// <param name="tree"></param>
-    public void SelectTree(TreeProfilePicture tree)
+    public void SelectTree(int treeIndex)
     {
+        TreeProfilePicture tree = characters[treeIndex];
+
         //If tree already is selected, deselect
         for(int i = 0; i < selectedProfiles.Length; i++)
         {
-            //if(selectedProfiles.)
+            if (selectedProfiles[i] == null)
+                continue;
+            if (!selectedProfiles[i].gameObject.activeInHierarchy)
+                continue;
+            if (selectedProfiles[i].index != treeIndex)
+                continue;
+
+            selectedProfiles[i].gameObject.SetActive(false);
+            characters[treeIndex].Highlight(false);
+            return;
         }
 
         //Add tree to selected
@@ -72,7 +86,9 @@ public class DatingHandler : MonoBehaviour
 
             selectedProfiles[i].CopyTreeProfilePicture(tree);
             selectedProfiles[i].gameObject.SetActive(true);
-            return;
+            selectedProfiles[i].index = treeIndex;
+            characters[treeIndex].Highlight(true);
+            break;
         }
     }
 }
