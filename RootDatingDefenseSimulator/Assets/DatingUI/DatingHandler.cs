@@ -69,9 +69,6 @@ public class DatingHandler : MonoBehaviour
     /// <param name="tree"></param>
     public void SelectTree(int treeIndex)
     {
-        Debug.Log("hfeiuhgiren");
-        TreeProfilePicture tree = profilePictures[treeIndex];
-
         //If tree already is selected, deselect
         for(int i = 0; i < selectedProfiles.Length; i++)
         {
@@ -92,7 +89,7 @@ public class DatingHandler : MonoBehaviour
             if (selectedProfiles[i].gameObject.activeInHierarchy)
                 continue;
 
-            DisplayTreeProfile(trees[i], selectedProfiles[i]);
+            DisplayTreeProfile(trees[treeIndex], selectedProfiles[i]);
             selectedProfiles[i].gameObject.SetActive(true);
             selectedProfiles[i].index = treeIndex;
             profilePictures[treeIndex].Highlight(true);
