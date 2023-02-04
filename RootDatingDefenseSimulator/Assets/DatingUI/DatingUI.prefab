@@ -647,30 +647,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableTreeList: {fileID: 1566630662410509121}
-  datingView: {fileID: 2219178934684818308}
+  datingMain: {fileID: 3340401846779704318}
   profileSettings: {fileID: 11400000, guid: b86bdf9fb0617584db94d41da0e1322c, type: 2}
-  treePrefab: {fileID: 8004438435003585563, guid: 9dea075e8c21a64458a6cc17d4fb1263, type: 3}
-  debugRandomizeFaces:
-  - {fileID: 21300000, guid: fcea477db14aa2a42887763ea921fb04, type: 3}
-  - {fileID: 21300000, guid: 92663e9978c5e9949a075c65e67ac5c2, type: 3}
-  - {fileID: 21300000, guid: 470fe4838ccee8b4199ed57377524707, type: 3}
-  - {fileID: 21300000, guid: 47ca2902ef835ac42a83f1e0134fd6fd, type: 3}
-  - {fileID: 21300000, guid: 6eb1a53a7da10114586ba666a961a137, type: 3}
-  - {fileID: 21300000, guid: 8e6abe2442f89ae488dc15827ef17295, type: 3}
-  debugRandomizeColors:
-  - {r: 1, g: 0.4198113, b: 0.81113946, a: 1}
-  - {r: 0.41960788, g: 1, b: 0.7736424, a: 1}
-  - {r: 1, g: 0.8614737, b: 0.41960788, a: 1}
-  - {r: 0.6803986, g: 0.2264151, b: 0.9056604, a: 1}
-  - {r: 0.5526499, g: 0.9433962, b: 0.45834818, a: 1}
-  debugRandomizePatterns:
-  - {fileID: 21300000, guid: 37d60f08ca479274e80fad74132cfa2f, type: 3}
-  - {fileID: 21300000, guid: 1fdeed3d3844d8541a74609b49c35e64, type: 3}
-  - {fileID: 21300000, guid: de95279d21904244ca2d2420106b5ecf, type: 3}
-  debugRandomizeTrunks:
-  - {fileID: 21300000, guid: c48852aa65299874d96fa2c9ff5ae343, type: 3}
-  - {fileID: 21300000, guid: 63588eeea38e88442ad09077f916057f, type: 3}
-  profilePictures:
+  treeButtons:
   - {fileID: 3763218254783446124}
   - {fileID: 3948822956951192270}
   - {fileID: 2935658230005975077}

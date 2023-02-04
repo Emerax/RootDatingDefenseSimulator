@@ -33,6 +33,10 @@ public class TreeConscript : MonoBehaviour {
     }
 
     private void Update() {
+        if(GameLogic.PlayerRole is not PlayerRole.TOWER_DEFENSER) {
+            return;
+        }
+
         timeUntilNextAction -= Time.deltaTime;
         if(timeUntilNextAction <= 0) {
             bool didAbility = ability.TryPerform();

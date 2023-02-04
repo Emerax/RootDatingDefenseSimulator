@@ -90,7 +90,6 @@ GameObject:
   - component: {fileID: 3344626677662825096}
   - component: {fileID: 6081405527401955664}
   - component: {fileID: 8004438435003585563}
-  - component: {fileID: 2571065174176566001}
   - component: {fileID: 1073077697188810673}
   m_Layer: 5
   m_Name: TreeIcon
@@ -214,18 +213,6 @@ MonoBehaviour:
   highlightObject: {fileID: 3631657778196185589}
   selectTreeButton: {fileID: 3344626677662825096}
   index: 0
---- !u!114 &2571065174176566001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1646270624822232823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c93e06f720c0d24b8c83702df68a5e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1073077697188810673
 MonoBehaviour:
   m_ObjectHideFlags: 0

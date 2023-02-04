@@ -175,6 +175,10 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
     }
 
     private void CheckHealth(float currentHealth, float maxHealth) {
+        if(GameLogic.PlayerRole is not PlayerRole.TOWER_DEFENSER) {
+            return;
+        }
+
         if(currentHealth <= 0) {
             PhotonNetwork.Destroy(photonView);
         }

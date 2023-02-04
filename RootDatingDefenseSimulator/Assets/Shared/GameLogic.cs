@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GameLogic : MonoBehaviourPunCallbacks {
     [SerializeField]
-    private GameObject uiPrefab;
-    [SerializeField]
     private FunGoernForest forest;
     [SerializeField]
     private TowerDefensor towerDefensor;
+    [SerializeField]
+    private DatingHandler UI;
 
     public static PlayerRole PlayerRole { get; private set; } = PlayerRole.NONE;
     public static GameState GameState { get; private set; }
@@ -16,7 +16,6 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     private bool mainPlayersAssigned = false;
 
     private void Start() {
-        Instantiate(uiPrefab);
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -84,6 +83,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     private void InitGame() {
         forest.Init(GameOverRPC);
         towerDefensor.Init();
+        UI.Initialize();
     }
 
     private void OnGameOver() {

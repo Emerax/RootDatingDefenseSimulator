@@ -28,6 +28,10 @@ public class Projectile : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if(GameLogic.PlayerRole is not PlayerRole.TOWER_DEFENSER) {
+            return;
+        }
+
         if(Time.time - spawnTime > settings.projectileLifetime) {
             PhotonNetwork.Destroy(gameObject);
         }
@@ -44,6 +48,10 @@ public class Projectile : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
+        if(GameLogic.PlayerRole is not PlayerRole.TOWER_DEFENSER) {
+            return;
+        }
+
         if(other.GetComponent<Enemy>() is Enemy enemy) {
             enemy.Health.Damage(damage);
             PhotonNetwork.Destroy(gameObject);
