@@ -43,8 +43,10 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
     public Transform HitPos { get => hitPos; }
 
     private readonly float damageOutput = 25f;
+    private readonly float timeBetweenPathUpdatesWhenBlocked = 1f;
     private Health currentTarget = null;
     private bool isInDestroyObstaclesMode = false;
+    private float timeuntilPathUpdateBlocked = 0f;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         Assert.IsNotNull(hitPos);
@@ -79,8 +81,12 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
 
         // Try reset / open up path
         if(!navMeshAgent.hasPath || navMeshAgent.pathStatus != NavMeshPathStatus.PathComplete) {
-            if(!isInDestroyObstaclesMode) {
+            if(timeuntilPathUpdateBlocked <= 0f) {
+                timeuntilPathUpdateBlocked = timeBetweenPathUpdatesWhenBlocked;
                 UpdateTarget();
+            }
+            else {
+                timeuntilPathUpdateBlocked -= Time.deltaTime;
             }
             isInDestroyObstaclesMode = true;
         }
