@@ -10,4 +10,23 @@ using UnityEngine.UI;
 public class TreeProfilePicture : MonoBehaviour
 {
     public Image faceImage;
+    public Button selectTreeButton;
+    private DatingHandler datingHandler;
+
+    public void Initialize(DatingHandler datingHandler)
+    {
+        this.datingHandler = datingHandler;
+        selectTreeButton.onClick.AddListener(SelectTree);
+    }
+
+    public void SelectTree()
+    {
+        Debug.Log("Clicked Button");
+        datingHandler.SelectTree(this);
+    }
+
+    public void CopyTreeProfilePicture(TreeProfilePicture copyFrom)
+    {
+        faceImage.sprite = copyFrom.faceImage.sprite;
+    }
 }
