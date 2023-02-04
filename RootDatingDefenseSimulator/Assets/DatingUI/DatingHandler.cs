@@ -20,8 +20,12 @@ public class DatingHandler : MonoBehaviour
     [SerializeField] private TreeProfilePicture[] profilePictures;
     [SerializeField] private TreeProfilePicture[] selectedProfiles;
     [SerializeField] private GameObject datePrompt;
+    [SerializeField] private Button datePromptYesButton;
+    [SerializeField] private Button datePromptNoButton;
 
     private TreeDateStatblock[] trees;
+    private enum DateState { SelectTree, StartDatePrompt, Date};
+    private DateState dateState;
 
     /// <summary>
     /// Debug purposes. Later characters will be shared.
@@ -64,6 +68,9 @@ public class DatingHandler : MonoBehaviour
             selectedProfiles[i].gameObject.SetActive(false);
         }
 
+        datePromptYesButton.onClick.AddListener(TryDate);
+
+        dateState = DateState.SelectTree;
         datePrompt.SetActive(false);
     }
 
@@ -116,7 +123,6 @@ public class DatingHandler : MonoBehaviour
 
     private void ShouldShowDatePrompt()
     {
-
         for (int i = 0; i < selectedProfiles.Length; i++)
         {
             if (!selectedProfiles[i].gameObject.activeInHierarchy)
@@ -128,8 +134,46 @@ public class DatingHandler : MonoBehaviour
         datePrompt.SetActive(true);
     }
 
+    /// <summary>
+    /// Check if we can date, and if we can create 2 children to replace their parents with.
+    /// </summary>
+    public void TryDate()
+    {
+        if (!selectedProfiles[0].gameObject.activeInHierarchy)
+            return;
+        if (!selectedProfiles[1].gameObject.activeInHierarchy)
+            return;
+
+        //Date adults to make children.
+        int tree1Index = selectedProfiles[0].index;
+        int tree2Index = selectedProfiles[1].index;
+        TreeDateStatblock child1 = DateQuoteOnQuote(trees[tree1Index], trees[tree2Index]);
+        TreeDateStatblock child2 = DateQuoteOnQuote(trees[tree1Index], trees[tree2Index]);
+
+        //Replace adults with children
+        trees[tree1Index] = child1;
+        trees[tree2Index] = child2;
+        DisplayTreeProfile(child1, profilePictures[tree1Index]);
+        DisplayTreeProfile(child2, profilePictures[tree2Index]);
+
+        //Update dating profile pictures.
+        profilePictures[tree1Index].Highlight(false);
+        profilePictures[tree2Index].Highlight(false);
+        selectedProfiles[0].gameObject.SetActive(false);
+        selectedProfiles[1].gameObject.SetActive(false);
+        ShouldShowDatePrompt();
+
+    }
+
     public TreeDateStatblock DateQuoteOnQuote(TreeDateStatblock tree1, TreeDateStatblock tree2)
     {
+        //fields to randomize
+        //public Sprite face;
+        //public Sprite trunk;
+        //public Color backgroundCol;
+        //public Color patternCol;
+        //public Sprite backgroundPattern;
+
         TreeDateStatblock treeYoungling = new TreeDateStatblock();
         if (Random.value < 0.5f)
             treeYoungling.face = tree1.face;
@@ -137,9 +181,24 @@ public class DatingHandler : MonoBehaviour
             treeYoungling.face = tree2.face;
 
         if (Random.value < 0.5f)
+            treeYoungling.trunk = tree1.trunk;
+        else
+            treeYoungling.trunk = tree2.trunk;
+
+        if (Random.value < 0.5f)
             treeYoungling.backgroundCol = tree1.backgroundCol;
         else
             treeYoungling.backgroundCol = tree2.backgroundCol;
+
+        if (Random.value < 0.5f)
+            treeYoungling.patternCol = tree1.patternCol;
+        else
+            treeYoungling.patternCol = tree2.patternCol;
+
+        if (Random.value < 0.5f)
+            treeYoungling.backgroundPattern = tree1.backgroundPattern;
+        else
+            treeYoungling.backgroundPattern = tree2.backgroundPattern;
 
         return treeYoungling;
     }
