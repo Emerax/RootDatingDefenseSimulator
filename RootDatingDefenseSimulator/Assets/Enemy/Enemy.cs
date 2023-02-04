@@ -67,8 +67,10 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
 
         // Try reset / open up path
         if(!navMeshAgent.hasPath || navMeshAgent.pathStatus != NavMeshPathStatus.PathComplete) {
+            if(!isInDestroyObstaclesMode) {
+                UpdateTarget();
+            }
             isInDestroyObstaclesMode = true;
-            UpdateTarget();
         }
 
         // Exit open up mode
