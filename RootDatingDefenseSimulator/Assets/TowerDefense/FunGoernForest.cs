@@ -1,7 +1,9 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Health))]
 public class FunGoernForest : MonoBehaviour {
+
     [SerializeField]
     private float maxHealth;
 
