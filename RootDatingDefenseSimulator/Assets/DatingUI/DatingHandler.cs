@@ -17,6 +17,8 @@ public class DatingHandler : MonoBehaviour
     private List<TreeProfilePicture> characters = new List<TreeProfilePicture>();
     [SerializeField] private TreeProfilePicture[] selectedProfiles;
 
+    public enum DatingUISTate { SelectTrees, StartDating, Dating};
+
     /// <summary>
     /// Debug purposes. Later characters will be shared.
     /// </summary>
