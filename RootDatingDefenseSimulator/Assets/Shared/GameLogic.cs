@@ -1,12 +1,15 @@
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class GameLogic : MonoBehaviourPunCallbacks {
     [SerializeField]
     private FunGoernForest forest;
     [SerializeField]
     private TowerDefensor towerDefensor;
+    [SerializeField]
+    private WaveManager waveManager;
     [SerializeField]
     private DatingHandler UI;
 
@@ -16,6 +19,10 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     private bool mainPlayersAssigned = false;
 
     private void Awake() {
+        Assert.IsNotNull(forest);
+        Assert.IsNotNull(towerDefensor);
+        Assert.IsNotNull(waveManager);
+        Assert.IsNotNull(UI);
         PhotonNetwork.IsMessageQueueRunning = false;
     }
 
@@ -87,6 +94,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     private void InitGame() {
         forest.Init(GameOverRPC);
         towerDefensor.Init();
+        waveManager.Init();
         UI.Initialize();
         PhotonNetwork.IsMessageQueueRunning = true;
     }

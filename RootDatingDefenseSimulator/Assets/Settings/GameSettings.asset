@@ -16,6 +16,6 @@ MonoBehaviour:
   rockHealth: 3
   treeHealth: 2
   enemyHealth: 5
-  enemyDamage: 1
+  timeBetweenWaves: 10
   timeBetweenEnemySpawns: 2
   projectileLifetime: 10
