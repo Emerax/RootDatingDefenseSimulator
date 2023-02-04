@@ -5,6 +5,8 @@ using UnityEngine;
 public class Tree : MonoBehaviour, IPunInstantiateMagicCallback {
     private Health health;
     private TreeAbility ability;
+    [SerializeField]
+    private Animator animator;
 
     private Action onDeath;
 
@@ -30,6 +32,7 @@ public class Tree : MonoBehaviour, IPunInstantiateMagicCallback {
         if(timeUntilNextAction <= 0) {
             bool didAbility = ability.TryPerform();
             if(didAbility) {
+                animator.SetTrigger("Attack");
                 timeUntilNextAction = actionCooldown;
             }
         }
