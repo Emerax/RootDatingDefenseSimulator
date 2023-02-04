@@ -2,6 +2,8 @@ using Photon.Pun;
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(DestructableObstacle))]
 public class Tree : MonoBehaviour, IPunInstantiateMagicCallback {
     private Health health;
     private TreeAbility ability;
@@ -10,14 +12,12 @@ public class Tree : MonoBehaviour, IPunInstantiateMagicCallback {
 
     private Action onDeath;
 
-    private Character character;
     [SerializeField]
     private float actionCooldown = 5f;
     private float timeUntilNextAction;
 
     private void Awake() {
         health = GetComponent<Health>();
-        health.Init(1);
         health.AddHealthListener(CheckHealth);
     }
 
@@ -44,6 +44,6 @@ public class Tree : MonoBehaviour, IPunInstantiateMagicCallback {
 
     private void CheckHealth(float arg1, float arg2) {
         onDeath?.Invoke();
-        PhotonNetwork.Destroy(gameObject);
+        // Destroyed in DestructableObstacle
     }
 }
