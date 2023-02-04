@@ -30,6 +30,7 @@ public class Health : MonoBehaviour {
         onTookDamage?.Invoke(damage);
     }
 
+    [PunRPC]
     private void SetHealthRPC(float newValue) {
         health = newValue;
         onHealthChanged?.Invoke(health, maxHealth);

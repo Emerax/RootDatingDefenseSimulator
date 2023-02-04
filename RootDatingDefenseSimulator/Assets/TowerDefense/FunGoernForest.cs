@@ -14,6 +14,7 @@ public class FunGoernForest : MonoBehaviour {
         health.Init(maxHealth);
         health.SetHealthListener(CheckDeath);
         SetDeathListener(gameOverListener);
+        Enemy.RegisterStaticTarget(health);
     }
 
     public void SetDeathListener(Action onDeath) {
@@ -22,6 +23,8 @@ public class FunGoernForest : MonoBehaviour {
 
     private void CheckDeath(float health, float maxHealth) {
         if(health <= 0) {
+            Debug.Log($"Forest died! D:");
+            Enemy.DeregisterTarget(this.health);
             onDeath?.Invoke();
         }
     }
