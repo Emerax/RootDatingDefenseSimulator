@@ -10,6 +10,8 @@ using UnityEngine.UI;
 public class TreeProfilePicture : MonoBehaviour
 {
     public Image faceImage;
+    public Image background;
+
     [SerializeField] private GameObject highlightObject;
     public Button selectTreeButton;
     public int index; //Mostly used for external indexing.

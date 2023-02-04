@@ -62,7 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -373,6 +373,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 47ca2902ef835ac42a83f1e0134fd6fd, type: 3}
   - {fileID: 21300000, guid: 6eb1a53a7da10114586ba666a961a137, type: 3}
   - {fileID: 21300000, guid: 8e6abe2442f89ae488dc15827ef17295, type: 3}
+  debugRandomizeColors:
+  - {r: 1, g: 0.4198113, b: 0.81113946, a: 1}
+  - {r: 0.41960788, g: 1, b: 0.7736424, a: 1}
+  - {r: 1, g: 0.8614737, b: 0.41960788, a: 1}
+  - {r: 0.6803986, g: 0.2264151, b: 0.9056604, a: 1}
+  - {r: 0.5526499, g: 0.9433962, b: 0.45834818, a: 1}
   profilePictures:
   - {fileID: 3763218254783446124}
   - {fileID: 3948822956951192270}
@@ -988,7 +994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1221,7 +1227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

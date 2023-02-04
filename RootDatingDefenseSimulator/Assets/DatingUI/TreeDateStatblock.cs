@@ -9,4 +9,5 @@ using UnityEngine;
 public class TreeDateStatblock
 {
     public Sprite face;
+    public Color backgroundCol;
 }
