@@ -9,23 +9,29 @@ public class Tree : MonoBehaviour, IPunInstantiateMagicCallback {
     private Action onDeath;
 
     private Character character;
+    [SerializeField]
     private float actionCooldown = 5f;
     private float timeUntilNextAction;
 
     private void Awake() {
         health = GetComponent<Health>();
         health.Init(1);
-        health.SetHealthListener(CheckHealth);
+        health.AddHealthListener(CheckHealth);
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         timeUntilNextAction = actionCooldown;
+        ability = gameObject.AddComponent<RangedAttackAbility>();
+        ability.Init(new Character());
     }
 
     private void Update() {
+        timeUntilNextAction -= Time.deltaTime;
         if(timeUntilNextAction <= 0) {
-            ability.Perform();
-            timeUntilNextAction = actionCooldown;
+            bool didAbility = ability.TryPerform();
+            if(didAbility) {
+                timeUntilNextAction = actionCooldown;
+            }
         }
     }
 

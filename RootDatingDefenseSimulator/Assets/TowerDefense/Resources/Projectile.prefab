@@ -133,6 +133,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flightSpeed: 5
   rotationSpeed: 120
+  visualsTransform: {fileID: 8177563246422818864}
+  target: {fileID: 0}
 --- !u!114 &383571214887298323
 MonoBehaviour:
   m_ObjectHideFlags: 0

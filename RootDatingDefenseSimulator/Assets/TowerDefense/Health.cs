@@ -20,7 +20,7 @@ public class Health : MonoBehaviour {
         onTookDamage += damageListener;
     }
 
-    public void SetHealthListener(Action<float, float> healthListener) {
+    public void AddHealthListener(Action<float, float> healthListener) {
         onHealthChanged += healthListener;
     }
 

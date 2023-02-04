@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour {
@@ -5,7 +6,9 @@ public class Projectile : MonoBehaviour {
     private float flightSpeed = 5f;
     [SerializeField]
     private float rotationSpeed = 120f;
-
+    [SerializeField]
+    private Transform visualsTransform;
+    [SerializeField]
     private Enemy target;
     private float damage;
 
@@ -20,16 +23,25 @@ public class Projectile : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        transform.Rotate(rotationSpeed * Time.deltaTime * rotationAngle);
+        visualsTransform.Rotate(rotationSpeed * Time.deltaTime * rotationAngle);
         if(target != null) {
-            Vector3 towardTarget = (transform.position - target.transform.position).normalized;
-            transform.Translate(flightSpeed * Time.deltaTime * towardTarget);
+            Vector3 towardTarget = (target.HitPos.position - transform.position).normalized;
+            transform.Translate(flightSpeed * Time.deltaTime * towardTarget, Space.World);
             prevTravelDirection = towardTarget;
         }
         else {
-            transform.Translate(prevTravelDirection * flightSpeed * Time.deltaTime);
+            transform.Translate(flightSpeed * Time.deltaTime * prevTravelDirection);
         }
     }
 
+    private void OnTriggerEnter(Collider other) {
+        if(other.GetComponent<Enemy>() is Enemy enemy) {
+            enemy.Health.Damage(damage);
+            PhotonNetwork.Destroy(gameObject);
+        }
 
+        if(other.gameObject.layer == LayerMask.NameToLayer("Ground")) {
+            PhotonNetwork.Destroy(gameObject);
+        }
+    }
 }

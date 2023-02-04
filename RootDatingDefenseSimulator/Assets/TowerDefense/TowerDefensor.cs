@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class TowerDefensor : MonoBehaviour {
@@ -15,7 +16,7 @@ public class TowerDefensor : MonoBehaviour {
 
         if(Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 1000f, raycastLayerMask)) {
             if(Input.GetMouseButtonDown(0)) {
-                Instantiate(prefab, hit.point, Quaternion.identity);
+                PhotonNetwork.Instantiate(prefab.name, hit.point, Quaternion.identity);
             }
         }
     }

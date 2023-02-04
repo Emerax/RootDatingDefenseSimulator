@@ -12,7 +12,7 @@ public class FunGoernForest : MonoBehaviour {
     public void Init(Action gameOverListener) {
         health = GetComponent<Health>();
         health.Init(maxHealth);
-        health.SetHealthListener(CheckDeath);
+        health.AddHealthListener(CheckDeath);
         AddDeathListener(gameOverListener);
         Enemy.RegisterStaticTarget(health);
     }

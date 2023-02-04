@@ -36,12 +36,19 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
 
     #region Instance behaviour
     private NavMeshAgent navMeshAgent;
+    public Health Health { get; private set; }
+    [SerializeField]
+    private Transform hitPos;
+    public Transform HitPos { get => hitPos; }
 
     private readonly float damageOutput = 25f;
     private Health currentTarget = null;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        Health = GetComponent<Health>();
+        Health.Init(5f);
+        Health.AddHealthListener(CheckHealth);
         if(GameLogic.PlayerRole != PlayerRole.TOWER_DEFENSER) {
             navMeshAgent.enabled = false;
         }
@@ -74,5 +81,12 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
             }
         }
     }
+
+    private void CheckHealth(float currentHealth, float maxHealth) {
+        if(currentHealth <= 0) {
+            PhotonNetwork.Destroy(photonView);
+        }
+    }
+
     #endregion
 }
