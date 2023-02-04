@@ -13,7 +13,6 @@ public class TreeProfilePicture : MonoBehaviour
     [SerializeField] private GameObject highlightObject;
     public Button selectTreeButton;
     public int index; //Mostly used for external indexing.
-    public TreeProfilePicture[] datableNeighbours;
 
     public void CopyTreeProfilePicture(TreeProfilePicture copyFrom)
     {
