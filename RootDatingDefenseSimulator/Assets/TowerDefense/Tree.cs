@@ -2,7 +2,7 @@ using Photon.Pun;
 using System;
 using UnityEngine;
 
-public class Tree : MonoBehaviour, IPunInstantiateMagicCallback {
+public class Tree : MonoBehaviour {
     private Health health;
     private TreeAbility ability;
     [SerializeField]
@@ -10,9 +10,8 @@ public class Tree : MonoBehaviour, IPunInstantiateMagicCallback {
 
     private Action onDeath;
 
-    private Character character;
     [SerializeField]
-    private float actionCooldown = 5f;
+    private float actionCooldown;
     private float timeUntilNextAction;
 
     private void Awake() {
@@ -21,10 +20,11 @@ public class Tree : MonoBehaviour, IPunInstantiateMagicCallback {
         health.AddHealthListener(CheckHealth);
     }
 
-    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+    public void Init(TreeStatblock stats) {
+        actionCooldown = stats.Cooldown;
         timeUntilNextAction = actionCooldown;
         ability = gameObject.AddComponent<RangedAttackAbility>();
-        ability.Init(new Character());
+        ability.Init(stats);
     }
 
     private void Update() {
@@ -42,8 +42,10 @@ public class Tree : MonoBehaviour, IPunInstantiateMagicCallback {
         onDeath += deathListener;
     }
 
-    private void CheckHealth(float arg1, float arg2) {
-        onDeath?.Invoke();
-        PhotonNetwork.Destroy(gameObject);
+    private void CheckHealth(float health, float maxHealth) {
+        if(health <= 0) {
+            onDeath?.Invoke();
+            PhotonNetwork.Destroy(gameObject);
+        }
     }
 }

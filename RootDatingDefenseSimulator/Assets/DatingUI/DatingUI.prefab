@@ -433,6 +433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availableTreeList: {fileID: 1566630662410509121}
   datingView: {fileID: 2219178934684818308}
+  profileSettings: {fileID: 11400000, guid: b86bdf9fb0617584db94d41da0e1322c, type: 2}
   treePrefab: {fileID: 8004438435003585563, guid: 9dea075e8c21a64458a6cc17d4fb1263, type: 3}
   debugRandomizeFaces:
   - {fileID: 21300000, guid: fcea477db14aa2a42887763ea921fb04, type: 3}

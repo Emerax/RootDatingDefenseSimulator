@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,8 +5,7 @@ using UnityEngine.UI;
 /// This will be the main object keeping the visual/dating-character, which is generated from the
 /// shared character class.
 /// </summary>
-public class TreeProfilePicture : MonoBehaviour
-{
+public class TreeProfilePicture : MonoBehaviour {
     public Image faceImage;
     public Image trunkImage;
     public Image background;
@@ -18,8 +15,15 @@ public class TreeProfilePicture : MonoBehaviour
     public Button selectTreeButton;
     public int index; //Mostly used for external indexing.
 
-    public void Highlight(bool highlightOn)
-    {
+    public void Highlight(bool highlightOn) {
         highlightObject.SetActive(highlightOn);
+    }
+
+    public void SetProfile(TreeStatblock tree) {
+        faceImage.sprite = tree.Face;
+        trunkImage.sprite = tree.Trunk;
+        background.color = tree.BackgroundCol;
+        backgroundPattern.sprite = tree.BackgroundPattern;
+        backgroundPattern.color = tree.PatternCol;
     }
 }

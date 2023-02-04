@@ -8,12 +8,13 @@ public class RangedAttackAbility : TreeAbility {
     private Vector3 projectileSpawnPos;
 
     private float attackDamage;
-    private float attackRange = 5f;
+    private float attackRange;
     private int layerMask;
     private Enemy target;
 
-    public override void Init(Character character) {
-        //Gather values from character.
+    public override void Init(TreeStatblock stats) {
+        attackDamage = stats.Attack;
+        attackRange = stats.Range;
         layerMask = 1 << 7;
         projectileSpawnPos = transform.position + Vector3.up;
     }
@@ -44,6 +45,6 @@ public class RangedAttackAbility : TreeAbility {
     }
 
     private void Attack() {
-        PhotonNetwork.Instantiate("Projectile", projectileSpawnPos, Quaternion.identity).GetComponent<Projectile>().Init(target, 1f);
+        PhotonNetwork.Instantiate("Projectile", projectileSpawnPos, Quaternion.identity).GetComponent<Projectile>().Init(target, attackDamage);
     }
 }
