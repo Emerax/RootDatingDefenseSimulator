@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameLogic : MonoBehaviourPunCallbacks {
     [SerializeField]
     private FunGoernForest forest;
+    [SerializeField]
+    private TowerDefensor towerDefensor;
 
     public static PlayerRole PlayerRole { get; private set; }
     public static GameState GameState { get; private set; }
@@ -78,6 +80,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
 
     private void InitGame() {
         forest.Init(GameOverRPC);
+        towerDefensor.Init();
     }
 
     private void OnGameOver() {
