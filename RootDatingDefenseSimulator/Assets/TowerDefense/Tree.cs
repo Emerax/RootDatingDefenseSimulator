@@ -1,12 +1,15 @@
 using Photon.Pun;
 using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(DestructableObstacle))]
 public class Tree : MonoBehaviour, IPunInstantiateMagicCallback {
     private Health health;
     private TreeAbility ability;
+    [SerializeField]
+    private GameSettings gameSettings;
     [SerializeField]
     private Animator animator;
 
@@ -17,14 +20,16 @@ public class Tree : MonoBehaviour, IPunInstantiateMagicCallback {
     private float timeUntilNextAction;
 
     private void Awake() {
+        Assert.IsNotNull(gameSettings);
         health = GetComponent<Health>();
+        health.Init(gameSettings.treeHealth);
         health.AddHealthListener(CheckHealth);
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         timeUntilNextAction = actionCooldown;
         ability = gameObject.AddComponent<RangedAttackAbility>();
-        ability.Init(new Character());
+        ability.Init(gameSettings, new Character());
     }
 
     private void Update() {

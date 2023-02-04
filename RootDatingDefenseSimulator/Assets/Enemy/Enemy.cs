@@ -37,23 +37,25 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
     private NavMeshAgent navMeshAgent;
     public Health Health { get; private set; }
     [SerializeField]
+    private GameSettings gameSettings;
+    [SerializeField]
     private Transform hitPos;
     [SerializeField]
     private TMP_Text debugText;
     public Transform HitPos { get => hitPos; }
 
-    private readonly float damageOutput = 25f;
     private readonly float timeBetweenPathUpdatesWhenBlocked = 1f;
     private Health currentTarget = null;
     private bool isInDestroyObstaclesMode = false;
     private float timeuntilPathUpdateBlocked = 0f;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        Assert.IsNotNull(gameSettings);
         Assert.IsNotNull(hitPos);
         Assert.IsNotNull(debugText);
         navMeshAgent = GetComponent<NavMeshAgent>();
         Health = GetComponent<Health>();
-        Health.Init(5f);
+        Health.Init(gameSettings.enemyHealth);
         Health.AddHealthListener(CheckHealth);
         if(GameLogic.PlayerRole != PlayerRole.TOWER_DEFENSER) {
             navMeshAgent.enabled = false;
@@ -73,7 +75,7 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
             distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
             if(distanceToTarget <= reachedThreshhold) {
                 debugText.text = $"Dying";
-                currentTarget.Damage(damageOutput);
+                currentTarget.Damage(gameSettings.enemyDamage);
                 PhotonNetwork.Destroy(photonView);
                 return;
             }
@@ -106,7 +108,7 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
             float distranceToObstacle = Vector3.Distance(obstaclePosition, transform.position);
             if(distranceToObstacle <= reachedThreshhold) {
                 debugText.text = $"DESTRUCTIVE\nDying";
-                closestDestructableObstacle.Damage(damageOutput);
+                closestDestructableObstacle.Damage(gameSettings.enemyDamage);
                 PhotonNetwork.Destroy(photonView);
                 return;
             }

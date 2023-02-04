@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cfdac5dae6395f4cbd1e8ecf82ec24b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSettings: {fileID: 11400000, guid: 240b75933996d774181d8360ec7201ca, type: 2}
   hitPos: {fileID: 846920325971221897}
   debugText: {fileID: 1324893792043567391}
 --- !u!114 &2548074389806464843
@@ -255,6 +256,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f06fa9e09031443a714e151cf465a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useHealthPreset: 0
+  gameSettings: {fileID: 0}
 --- !u!114 &6241181948072813838
 MonoBehaviour:
   m_ObjectHideFlags: 0

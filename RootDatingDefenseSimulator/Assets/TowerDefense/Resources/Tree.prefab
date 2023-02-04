@@ -82,6 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ecedd791e90e0642907db4f1f6e7c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSettings: {fileID: 11400000, guid: 240b75933996d774181d8360ec7201ca, type: 2}
   animator: {fileID: 6964895262478833717}
   actionCooldown: 5
 --- !u!114 &149447518762877939
@@ -96,6 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f06fa9e09031443a714e151cf465a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useHealthPreset: 0
+  gameSettings: {fileID: 0}
 --- !u!114 &4641201883990739166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b2dbe17ca683204eb38a9c566a7a435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
 --- !u!136 &1344003370548770452
 CapsuleCollider:
   m_ObjectHideFlags: 0

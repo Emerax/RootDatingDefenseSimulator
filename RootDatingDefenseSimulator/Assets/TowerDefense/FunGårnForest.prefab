@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b452ea16ac7a441b124bdd68ecd19b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &4674961096918697649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,6 +59,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f06fa9e09031443a714e151cf465a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSettings: {fileID: 11400000, guid: 240b75933996d774181d8360ec7201ca, type: 2}
+  useHealthPreset: 1
 --- !u!114 &6328953461727299817
 MonoBehaviour:
   m_ObjectHideFlags: 0

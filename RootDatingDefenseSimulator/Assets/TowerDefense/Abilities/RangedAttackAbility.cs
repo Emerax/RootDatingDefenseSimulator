@@ -4,7 +4,8 @@ using System.Linq;
 using UnityEngine;
 
 public class RangedAttackAbility : TreeAbility {
-    private Projectile projectilePrefab;
+
+    private GameSettings gameSettings;
     private Vector3 projectileSpawnPos;
 
     private float attackDamage;
@@ -12,7 +13,8 @@ public class RangedAttackAbility : TreeAbility {
     private int layerMask;
     private Enemy target;
 
-    public override void Init(Character character) {
+    public override void Init(GameSettings gameSettings, Character character) {
+        this.gameSettings = gameSettings;
         //Gather values from character.
         layerMask = 1 << 7;
         projectileSpawnPos = transform.position + Vector3.up;
@@ -44,6 +46,6 @@ public class RangedAttackAbility : TreeAbility {
     }
 
     private void Attack() {
-        PhotonNetwork.Instantiate("Projectile", projectileSpawnPos, Quaternion.identity).GetComponent<Projectile>().Init(target, 1f);
+        PhotonNetwork.Instantiate("Projectile", projectileSpawnPos, Quaternion.identity).GetComponent<Projectile>().Init(target, gameSettings.treeRangedAttackDamage);
     }
 }
