@@ -198,6 +198,10 @@ MonoBehaviour:
   debugRandomizeFaces:
   - {fileID: 21300000, guid: fcea477db14aa2a42887763ea921fb04, type: 3}
   - {fileID: 21300000, guid: 92663e9978c5e9949a075c65e67ac5c2, type: 3}
+  - {fileID: 21300000, guid: 470fe4838ccee8b4199ed57377524707, type: 3}
+  - {fileID: 21300000, guid: 47ca2902ef835ac42a83f1e0134fd6fd, type: 3}
+  - {fileID: 21300000, guid: 6eb1a53a7da10114586ba666a961a137, type: 3}
+  - {fileID: 21300000, guid: 8e6abe2442f89ae488dc15827ef17295, type: 3}
   selectedProfiles:
   - {fileID: 7102754003180926506}
   - {fileID: 5839329150316153405}
@@ -514,6 +518,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4617650109405433047, guid: 9dea075e8c21a64458a6cc17d4fb1263, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4617650109405433047, guid: 9dea075e8c21a64458a6cc17d4fb1263, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9dea075e8c21a64458a6cc17d4fb1263, type: 3}
 --- !u!224 &3371687225049262950 stripped
@@ -630,6 +642,14 @@ PrefabInstance:
     - target: {fileID: 2945749051537361789, guid: 9dea075e8c21a64458a6cc17d4fb1263, type: 3}
       propertyPath: m_LocalScale.x
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4617650109405433047, guid: 9dea075e8c21a64458a6cc17d4fb1263, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4617650109405433047, guid: 9dea075e8c21a64458a6cc17d4fb1263, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 300
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9dea075e8c21a64458a6cc17d4fb1263, type: 3}
