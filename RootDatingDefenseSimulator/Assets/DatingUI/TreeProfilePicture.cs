@@ -10,17 +10,13 @@ using UnityEngine.UI;
 public class TreeProfilePicture : MonoBehaviour
 {
     public Image faceImage;
+    public Image trunkImage;
     public Image background;
+    public Image backgroundPattern;
 
     [SerializeField] private GameObject highlightObject;
     public Button selectTreeButton;
     public int index; //Mostly used for external indexing.
-
-    public void CopyTreeProfilePicture(TreeProfilePicture copyFrom)
-    {
-        faceImage.sprite = copyFrom.faceImage.sprite;
-        //Don't copy index or selectTreeButton, they're for external use
-    }
 
     public void Highlight(bool highlightOn)
     {
