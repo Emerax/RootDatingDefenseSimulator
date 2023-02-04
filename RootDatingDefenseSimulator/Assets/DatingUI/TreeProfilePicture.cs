@@ -10,23 +10,18 @@ using UnityEngine.UI;
 public class TreeProfilePicture : MonoBehaviour
 {
     public Image faceImage;
+    [SerializeField] private GameObject highlightObject;
     public Button selectTreeButton;
-    private DatingHandler datingHandler;
-
-    public void Initialize(DatingHandler datingHandler)
-    {
-        this.datingHandler = datingHandler;
-        selectTreeButton.onClick.AddListener(SelectTree);
-    }
-
-    public void SelectTree()
-    {
-        Debug.Log("Clicked Button");
-        datingHandler.SelectTree(this);
-    }
+    public int index; //Mostly used for external indexing.
 
     public void CopyTreeProfilePicture(TreeProfilePicture copyFrom)
     {
         faceImage.sprite = copyFrom.faceImage.sprite;
+        //Don't copy index, it's for external use
+    }
+
+    public void Highlight(bool highlightOn)
+    {
+        highlightObject.SetActive(highlightOn);
     }
 }
