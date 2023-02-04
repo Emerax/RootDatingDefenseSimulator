@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameLogic : MonoBehaviourPunCallbacks {
     [SerializeField]
+    private GameObject uiPrefab;
+    [SerializeField]
     private FunGoernForest forest;
     [SerializeField]
     private TowerDefensor towerDefensor;
@@ -14,6 +16,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     private bool mainPlayersAssigned = false;
 
     private void Start() {
+        Instantiate(uiPrefab);
         PhotonNetwork.ConnectUsingSettings();
     }
 

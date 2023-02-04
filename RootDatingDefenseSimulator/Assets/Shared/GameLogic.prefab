@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb7ccec717ed384f869f798a432d26d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiPrefab: {fileID: 2943633512989173681, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
+  forest: {fileID: 0}
+  towerDefensor: {fileID: 0}
 --- !u!114 &4397073061464258318
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,10 +13,10 @@ public class FunGoernForest : MonoBehaviour {
         health = GetComponent<Health>();
         health.Init(maxHealth);
         health.SetHealthListener(CheckDeath);
-        SetDeathListener(gameOverListener);
+        AddDeathListener(gameOverListener);
     }
 
-    public void SetDeathListener(Action onDeath) {
+    public void AddDeathListener(Action onDeath) {
         this.onDeath += onDeath;
     }
 
