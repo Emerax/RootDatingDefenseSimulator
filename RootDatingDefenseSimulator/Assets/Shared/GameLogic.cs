@@ -3,6 +3,9 @@ using Photon.Realtime;
 using UnityEngine;
 
 public class GameLogic : MonoBehaviourPunCallbacks {
+    [SerializeField]
+    private FunGoernForest forest;
+
     public static PlayerRole PlayerRole { get; private set; }
     public static GameState GameState { get; private set; }
 
@@ -70,7 +73,15 @@ public class GameLogic : MonoBehaviourPunCallbacks {
         }
 
         PhotonNetwork.LocalPlayer.NickName = newNickName;
-        //Do stuff to start game.
+        InitGame();
+    }
+
+    private void InitGame() {
+        forest.Init(GameOverRPC);
+    }
+
+    private void OnGameOver() {
+        photonView.RPC(nameof(GameOverRPC), RpcTarget.All);
     }
 
     [PunRPC]
@@ -78,6 +89,11 @@ public class GameLogic : MonoBehaviourPunCallbacks {
         Debug.Log($"You recieved role: {type}");
         PlayerRole = type;
         OnPlayerTypeAssigned();
+    }
+
+    [PunRPC]
+    private void GameOverRPC() {
+        Debug.Log("GAME OVER MAAAN");
     }
 
     [PunRPC]
