@@ -450,7 +450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5123953367217550537, guid: c895de20820289642be8219c47f2d3e4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5650614499385520063, guid: c895de20820289642be8219c47f2d3e4, type: 3}
       propertyPath: sceneViewId
@@ -492,10 +492,6 @@ PrefabInstance:
     - target: {fileID: 1451639708723103136, guid: 72e927729db58244cb789ceaef589166, type: 3}
       propertyPath: m_Name
       value: Level01
-      objectReference: {fileID: 0}
-    - target: {fileID: 1451639708723103136, guid: 72e927729db58244cb789ceaef589166, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2113790341863333590, guid: 72e927729db58244cb789ceaef589166, type: 3}
       propertyPath: sceneViewId
