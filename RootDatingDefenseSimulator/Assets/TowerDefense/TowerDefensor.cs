@@ -18,7 +18,7 @@ public class TowerDefensor : MonoBehaviour {
         if(Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 1000f, raycastLayerMask)) {
             if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
                 GameObject go = PhotonNetwork.Instantiate(prefab.name, hit.point, Quaternion.identity);
-                go.GetComponent<Tree>().Init(DatingHandler.GenerateRandomTreeStats());
+                go.GetComponent<TreeConscript>().Init(DatingHandler.GenerateRandomTreeStats());
             }
         }
     }

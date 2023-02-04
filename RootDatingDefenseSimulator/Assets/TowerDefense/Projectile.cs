@@ -10,7 +10,11 @@ public class Projectile : MonoBehaviour {
     private Transform visualsTransform;
     [SerializeField]
     private Enemy target;
+    [SerializeField]
+    private GameSettings settings;
+
     private float damage;
+    private float spawnTime;
 
     private Vector3 rotationAngle;
     private Vector3 prevTravelDirection;
@@ -19,10 +23,15 @@ public class Projectile : MonoBehaviour {
         this.target = target;
         this.damage = damage;
         rotationAngle = Random.onUnitSphere.normalized;
+        spawnTime = Time.time;
     }
 
     // Update is called once per frame
     void Update() {
+        if(Time.time - spawnTime > settings.projectileLifetime) {
+            PhotonNetwork.Destroy(gameObject);
+        }
+
         visualsTransform.Rotate(rotationSpeed * Time.deltaTime * rotationAngle);
         if(target != null) {
             Vector3 towardTarget = (target.HitPos.position - transform.position).normalized;

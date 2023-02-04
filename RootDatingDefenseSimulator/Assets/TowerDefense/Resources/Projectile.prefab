@@ -135,6 +135,7 @@ MonoBehaviour:
   rotationSpeed: 120
   visualsTransform: {fileID: 8177563246422818864}
   target: {fileID: 0}
+  settings: {fileID: 11400000, guid: 240b75933996d774181d8360ec7201ca, type: 2}
 --- !u!114 &383571214887298323
 MonoBehaviour:
   m_ObjectHideFlags: 0

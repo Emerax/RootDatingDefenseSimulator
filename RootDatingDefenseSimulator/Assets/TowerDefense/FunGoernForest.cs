@@ -1,11 +1,9 @@
 using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(Health))]
 public class FunGoernForest : MonoBehaviour {
-
-    [SerializeField]
-    private float maxHealth;
 
     private Health health;
 
@@ -13,7 +11,6 @@ public class FunGoernForest : MonoBehaviour {
 
     public void Init(Action gameOverListener) {
         health = GetComponent<Health>();
-        health.Init(maxHealth);
         health.AddHealthListener(CheckDeath);
         AddDeathListener(gameOverListener);
         Enemy.RegisterStaticTarget(health);

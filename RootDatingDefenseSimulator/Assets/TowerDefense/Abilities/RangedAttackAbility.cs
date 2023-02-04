@@ -4,7 +4,8 @@ using System.Linq;
 using UnityEngine;
 
 public class RangedAttackAbility : TreeAbility {
-    private Projectile projectilePrefab;
+
+    private GameSettings gameSettings;
     private Vector3 projectileSpawnPos;
 
     private float attackDamage;
@@ -12,7 +13,8 @@ public class RangedAttackAbility : TreeAbility {
     private int layerMask;
     private Enemy target;
 
-    public override void Init(TreeStatblock stats) {
+    public override void Init(TreeStatblock stats, GameSettings gameSettings) {
+        this.gameSettings = gameSettings;
         attackDamage = stats.Attack;
         attackRange = stats.Range;
         layerMask = 1 << 7;
