@@ -8,7 +8,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     [SerializeField]
     private TowerDefensor towerDefensor;
 
-    public static PlayerRole PlayerRole { get; private set; }
+    public static PlayerRole PlayerRole { get; private set; } = PlayerRole.NONE;
     public static GameState GameState { get; private set; }
 
     private bool mainPlayersAssigned = false;
