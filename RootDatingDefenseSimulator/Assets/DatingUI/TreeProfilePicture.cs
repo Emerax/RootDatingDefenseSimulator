@@ -17,7 +17,7 @@ public class TreeProfilePicture : MonoBehaviour
     public void CopyTreeProfilePicture(TreeProfilePicture copyFrom)
     {
         faceImage.sprite = copyFrom.faceImage.sprite;
-        //Don't copy index, it's for external use
+        //Don't copy index or selectTreeButton, they're for external use
     }
 
     public void Highlight(bool highlightOn)
