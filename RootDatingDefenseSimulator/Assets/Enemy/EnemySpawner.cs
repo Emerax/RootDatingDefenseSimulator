@@ -1,26 +1,23 @@
+using Photon.Pun;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Assertions;
 
 public class EnemySpawner : MonoBehaviour {
 
-    [SerializeField]
-    private Enemy enemyPrefab;
-
     private const float spawnCooldown = 3f;
-    private float timeUntilNextSpawn = 0f;
 
-    private void Awake() {
-        Assert.IsNotNull(enemyPrefab);
-        timeUntilNextSpawn = spawnCooldown;
-    }
+    private float timeUntilNextSpawn = 1f;
 
     private void Update() {
-        timeUntilNextSpawn -= Time.deltaTime;
-        if(timeUntilNextSpawn <= 0f) {
+        if(GameLogic.PlayerRole != PlayerRole.TOWER_DEFENSER) {
+            return;
+        }
+
+        if(timeUntilNextSpawn > 0f) {
+            timeUntilNextSpawn -= Time.deltaTime;
+        }
+        else if(Enemy.HasPotentialTargets()) {
             timeUntilNextSpawn = spawnCooldown;
-            Enemy enemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-            //enemy.GetComponent<NavMeshAgent>().set
+            PhotonNetwork.Instantiate("Enemy", transform.position, Quaternion.identity);
         }
     }
 }
