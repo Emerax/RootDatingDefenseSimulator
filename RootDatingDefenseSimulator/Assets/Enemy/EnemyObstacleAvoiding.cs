@@ -22,6 +22,8 @@ public class EnemyObstacleAvoiding : Enemy {
     #region Instance behaviour
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private Transform explosionOrigin;
 
     private readonly float timeBetweenPathUpdatesWhenBlocked = 1f;
 
@@ -32,6 +34,7 @@ public class EnemyObstacleAvoiding : Enemy {
     public override void OnPhotonInstantiate(PhotonMessageInfo info) {
         base.OnPhotonInstantiate(info);
         Assert.IsNotNull(animator);
+        Assert.IsNotNull(explosionOrigin);
 
         EnemyStats stats = EnemyStats.FromObjectArray(photonView.InstantiationData);
 
@@ -79,6 +82,7 @@ public class EnemyObstacleAvoiding : Enemy {
             if(distranceToObstacle <= reachedThreshhold) {
                 debugText.text = $"DESTRUCTIVE\nDying";
                 closestDestructableObstacle.Damage(attackDamage);
+                PhotonNetwork.Instantiate("Explosion", explosionOrigin.transform.position, Quaternion.identity);
                 PhotonNetwork.Destroy(photonView);
                 return;
             }
