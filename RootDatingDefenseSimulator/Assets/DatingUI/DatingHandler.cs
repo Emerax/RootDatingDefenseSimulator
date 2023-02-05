@@ -383,7 +383,7 @@ public class DatingHandler : MonoBehaviour {
                 continue;
             trees[i] = GenerateRandomTreeStats();
             DisplayTreeProfile(trees[i], treeButtons[i]);
-            treeButtons[i].TriggerAnimation("NewTree");
+            treeButtons[i].TriggerAnimation("NewTreeOutsider");
             return;
         }
     }
