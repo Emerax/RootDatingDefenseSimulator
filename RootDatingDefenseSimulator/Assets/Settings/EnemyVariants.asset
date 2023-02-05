@@ -28,7 +28,7 @@ MonoBehaviour:
       health: 4
       attackDamage: 1.5
       verticalOffset: 0
-      increaseMovementSpeed: 0
+      increaseMovementSpeed: 0.1
       increaseHealth: 0.3
       increaseAttackDamage: 0.3
   - id: 2
@@ -55,7 +55,7 @@ MonoBehaviour:
       health: 4
       attackDamage: 1.5
       verticalOffset: 3
-      increaseMovementSpeed: 0
+      increaseMovementSpeed: 0.1
       increaseHealth: 0.3
       increaseAttackDamage: 0.3
   - id: 5

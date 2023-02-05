@@ -22,6 +22,8 @@ public class EnemyObstacleAvoiding : Enemy {
     #region Instance behaviour
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private Transform explosionOrigin;
 
     private readonly float timeBetweenPathUpdatesWhenBlocked = 1f;
 
@@ -32,6 +34,7 @@ public class EnemyObstacleAvoiding : Enemy {
     public override void OnPhotonInstantiate(PhotonMessageInfo info) {
         base.OnPhotonInstantiate(info);
         Assert.IsNotNull(animator);
+        Assert.IsNotNull(explosionOrigin);
 
         EnemyStats stats = EnemyStats.FromObjectArray(photonView.InstantiationData);
 
@@ -59,13 +62,13 @@ public class EnemyObstacleAvoiding : Enemy {
                 timeuntilPathUpdateBlocked -= Time.deltaTime;
             }
             isInDestroyObstaclesMode = true;
-            animator.SetBool("IsDestructive", isInDestroyObstaclesMode);
+            photonView.RPC(nameof(SetAnimationBoolRPC), RpcTarget.All, "IsDestructive", isInDestroyObstaclesMode);
         }
 
         // Exit open up mode
         if(navMeshAgent.hasPath && navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete) {
             isInDestroyObstaclesMode = false;
-            animator.SetBool("IsDestructive", isInDestroyObstaclesMode);
+            photonView.RPC(nameof(SetAnimationBoolRPC), RpcTarget.All, "IsDestructive", isInDestroyObstaclesMode);
             debugText.text = $"Targeting {currentTarget.name} {distanceToTarget}m / {reachedThreshhold}m";
         }
 
@@ -79,6 +82,7 @@ public class EnemyObstacleAvoiding : Enemy {
             if(distranceToObstacle <= reachedThreshhold) {
                 debugText.text = $"DESTRUCTIVE\nDying";
                 closestDestructableObstacle.Damage(attackDamage);
+                PhotonNetwork.Instantiate("Explosion", explosionOrigin.transform.position, Quaternion.identity);
                 PhotonNetwork.Destroy(photonView);
                 return;
             }
@@ -100,6 +104,11 @@ public class EnemyObstacleAvoiding : Enemy {
 
     private Health GetClosestDestructableObstacle(Vector3 position) {
         return GetClosestHealth(destructableObjects, position);
+    }
+
+    [PunRPC]
+    private void SetAnimationBoolRPC(string name, bool value) {
+        animator.SetBool(name, value);
     }
 
     #endregion
