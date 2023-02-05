@@ -18,6 +18,7 @@ public class DatingHandler : MonoBehaviour {
     [SerializeField] private TreeButton[] selectedProfiles;
 
     [SerializeField] private GameObject dateMinigameParent;
+    [SerializeField] private Animator dateFeedbackAnimator;
     [SerializeField] private DatingSpeechBubble datePromptBubble;
     [SerializeField] private DatingSpeechBubble[] dateAnswerBubble;
     private int correctAnswerBubbleIndex;
@@ -290,7 +291,10 @@ public class DatingHandler : MonoBehaviour {
         yield return new WaitForSeconds(1.8f);
         selectedProfiles[0].TriggerAnimation("Talk");
 
-        if (answerIndex == correctAnswerBubbleIndex) {
+        if (answerIndex == correctAnswerBubbleIndex)
+        {
+            dateFeedbackAnimator.SetTrigger("DateSuccess");
+            yield return new WaitForSeconds(1f);
             TryDate();
         }
         else {
