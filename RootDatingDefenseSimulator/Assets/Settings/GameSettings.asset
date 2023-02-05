@@ -17,4 +17,6 @@ MonoBehaviour:
   treeHealth: 1
   timeBetweenWaves: 10
   timeBetweenEnemySpawns: 2
+  minTreeScaleFactorFromLifeLoss: 0.01
+  treeLifetime: 40
   projectileLifetime: 10
