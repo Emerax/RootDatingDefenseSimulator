@@ -197,16 +197,41 @@ public class DatingHandler : MonoBehaviour {
         //Date adults to make children.
         int tree1Index = selectedProfiles[0].index;
         int tree2Index = selectedProfiles[1].index;
-        TreeStatblock child1 = DateQuoteOnQuote(trees[tree1Index], trees[tree2Index]);
-        TreeStatblock child2 = DateQuoteOnQuote(trees[tree1Index], trees[tree2Index]);
 
-        //Replace adults with children
-        trees[tree2Index] = child2;
-        trees[tree1Index] = child1;
-        DisplayTreeProfile(child1, treeButtons[tree1Index]);
-        DisplayTreeProfile(child2, treeButtons[tree2Index]);
-        treeButtons[tree1Index].TriggerAnimation("NewTree");
-        treeButtons[tree2Index].TriggerAnimation("NewTree");
+        for (int i = 0; i < datingSettings.numChildrenPerDate; i++)
+        {
+            TreeStatblock child = DateQuoteOnQuote(trees[tree1Index], trees[tree2Index]);
+
+            //Find open spot for child
+            bool foundSpace = false;
+            for (int spaceInd = 0; spaceInd < treeButtons.Length; spaceInd++)
+            {
+                if (trees[spaceInd] == null)
+                {
+                    trees[spaceInd] = child;
+                    foundSpace = true;
+                    DisplayTreeProfile(child, treeButtons[spaceInd]);
+                    treeButtons[spaceInd].TriggerAnimation("NewTree");
+                    break;
+                }
+            }
+
+            if (!foundSpace)
+            {
+                if(Random.value < 0.5f)
+                {
+                    trees[tree1Index] = child;
+                    DisplayTreeProfile(child, treeButtons[tree1Index]);
+                    treeButtons[tree1Index].TriggerAnimation("NewTree");
+                }
+                else
+                {
+                    trees[tree2Index] = child;
+                    DisplayTreeProfile(child, treeButtons[tree2Index]);
+                    treeButtons[tree2Index].TriggerAnimation("NewTree");
+                }
+            }
+        }
 
         //Update dating profile pictures.
         EndDateAndReturnDaters();
