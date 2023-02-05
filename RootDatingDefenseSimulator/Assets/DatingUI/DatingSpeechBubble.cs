@@ -7,4 +7,5 @@ public class DatingSpeechBubble : MonoBehaviour
 {
     public Image emoji;
     public Button button;
+    public Animator animator;
 }

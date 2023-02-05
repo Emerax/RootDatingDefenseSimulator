@@ -14,6 +14,7 @@ public class TreeButton : MonoBehaviour {
     public Image backgroundPattern;
 
     [SerializeField] private GameObject highlightObject;
+    [SerializeField] private Animator emoteAnimator;
     public Button selectTreeButton;
     public int index; //Mostly used for external indexing.
     private TreeStatblock tree;
@@ -49,5 +50,13 @@ public class TreeButton : MonoBehaviour {
     private void SetTreeProfileRPC(int[] statIndices) {
         tree = new(statIndices.ToList());
         UpdateProfile();
+    }
+
+    public void TriggerAnimation(string triggerName)
+    {
+        if (emoteAnimator)
+        {
+            emoteAnimator.SetTrigger(triggerName);
+        }
     }
 }

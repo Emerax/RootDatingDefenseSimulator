@@ -22,9 +22,9 @@ public class TreeStatblock {
     public Sprite BackgroundPattern => DatingHandler.ProfileSettings.PatternSprites[stats[4]];
 
     //Fighter stats
-    public float Attack => DatingHandler.ProfileSettings.AttackTiers[stats[5]];
+    public float Attack => DatingHandler.ProfileSettings.AttackTiers[stats[0]];
     public float Cooldown => DatingHandler.ProfileSettings.CooldownTiers[stats[6]];
-    public float Range => DatingHandler.ProfileSettings.RangeTiers[stats[7]];
-    public float Size => DatingHandler.ProfileSettings.SizeTiers[stats[8]];
+    public float Range => DatingHandler.ProfileSettings.RangeTiers[stats[2]];
+    public float Size => DatingHandler.ProfileSettings.SizeTiers[stats[4]];
     public System.Type Ability => DatingHandler.ProfileSettings.Abilities[stats[9]];
 }

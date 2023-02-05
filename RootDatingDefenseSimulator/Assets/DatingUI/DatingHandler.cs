@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -88,7 +89,9 @@ public class DatingHandler : MonoBehaviour {
         for(int i = 0; i < dateAnswerBubble.Length; i++) {
             //integerPointerExorcist explained in the for-loop above
             int integerPointerExorcist = i;
-            dateAnswerBubble[i].button.onClick.AddListener(delegate { AnswerDatePrompt(integerPointerExorcist); });
+            dateAnswerBubble[i].button.onClick.AddListener(delegate { 
+                StartCoroutine(AnswerDatePrompt(integerPointerExorcist)); 
+            });
         }
 
         dateState = DateState.SelectTree;
@@ -160,7 +163,7 @@ public class DatingHandler : MonoBehaviour {
             }
         }
 
-        BeginDate();
+        StartCoroutine(DoDate());
     }
 
     /// <summary>
@@ -214,9 +217,20 @@ public class DatingHandler : MonoBehaviour {
         return new TreeStatblock(younglingStatsIndices);
     }
 
-    public void BeginDate() {
+    IEnumerator DoDate() {
         dateState = DateState.Date;
         dateMinigameParent.SetActive(true);
+
+        for (int i = 0; i < dateAnswerBubble.Length; i++)
+        {
+            dateAnswerBubble[i].gameObject.SetActive(false);
+        }
+        datePromptBubble.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(0.2f);
+        selectedProfiles[0].TriggerAnimation("Talk");
+
+        yield return new WaitForSeconds(1f);
 
         List<DatingSettings.EmojiMatches> availableEmojiMatches = datingSettings.matchingEmojis.ToList();
 
@@ -235,29 +249,49 @@ public class DatingHandler : MonoBehaviour {
         Sprite correctAnswerEmoji = emojiMatches[correctAnswerEmojiIndex];
         emojiMatches.RemoveAt(correctAnswerEmojiIndex);
 
-        //Todo set emoji prompt
+        //Set emojis in bubbles
         datePromptBubble.emoji.sprite = promptEmoji;
+        datePromptBubble.gameObject.SetActive(true);
+        datePromptBubble.animator.SetTrigger("Start");
+        yield return new WaitForSeconds(0.8f);
 
-        //Todo set emoji answers
         correctAnswerBubbleIndex = Random.Range(0, dateAnswerBubble.Length);
         for(int i = 0; i < dateAnswerBubble.Length; i++) {
+            //Correct answer should match prompt emoji
             if(i == correctAnswerBubbleIndex) {
                 dateAnswerBubble[i].emoji.sprite = correctAnswerEmoji;
-                continue;
+            }
+            else
+            {
+                //Otherwise pick an emoji from another random set
+                int randEmojiMatchesIndex = Random.Range(0, availableEmojiMatches.Count);
+                Sprite[] randomMatch = availableEmojiMatches[randEmojiMatchesIndex].emoji;
+                availableEmojiMatches.RemoveAt(randEmojiMatchesIndex);
+                int randomEmojiIndex = Random.Range(0, randomMatch.Length);
+                Sprite randEmoji = randomMatch[randomEmojiIndex];
+
+                dateAnswerBubble[i].emoji.sprite = randEmoji;
             }
 
-            int randEmojiMatchesIndex = Random.Range(0, availableEmojiMatches.Count);
-            Sprite[] randomMatch = availableEmojiMatches[randEmojiMatchesIndex].emoji;
-            availableEmojiMatches.RemoveAt(randEmojiMatchesIndex);
-            int randomEmojiIndex = Random.Range(0, randomMatch.Length);
-            Sprite randEmoji = randomMatch[randomEmojiIndex];
-
-            dateAnswerBubble[i].emoji.sprite = randEmoji;
+            dateAnswerBubble[i].gameObject.SetActive(true);
+            dateAnswerBubble[i].animator.SetTrigger("Start");
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
-    private void AnswerDatePrompt(int answerIndex) {
-        if(answerIndex == correctAnswerBubbleIndex) {
+    IEnumerator AnswerDatePrompt(int answerIndex) {
+        for (int i = 0; i < dateAnswerBubble.Length; i++)
+        {
+            if (i == answerIndex) 
+                continue;
+            dateAnswerBubble[i].gameObject.SetActive(false);
+        }
+
+        selectedProfiles[1].TriggerAnimation("Talk");
+        yield return new WaitForSeconds(1.8f);
+        selectedProfiles[0].TriggerAnimation("Talk");
+
+        if (answerIndex == correctAnswerBubbleIndex) {
             TryDate();
         }
         else {
