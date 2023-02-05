@@ -12,6 +12,10 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     private WaveManager waveManager;
     [SerializeField]
     private DatingHandler UI;
+    [SerializeField]
+    private Canvas gameOverCanvas;
+
+    public static bool isGameOver = false;
 
     public static PlayerRole PlayerRole { get; private set; } = PlayerRole.NONE;
     public static GameState GameState { get; private set; }
@@ -24,6 +28,9 @@ public class GameLogic : MonoBehaviourPunCallbacks {
         Assert.IsNotNull(waveManager);
         Assert.IsNotNull(UI);
         PhotonNetwork.IsMessageQueueRunning = false;
+        gameOverCanvas.gameObject.SetActive(false);
+
+        isGameOver = false;
     }
 
     private void Start() {
@@ -113,6 +120,8 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     [PunRPC]
     private void GameOverRPC() {
         Debug.Log("GAME OVER MAAAN");
+        isGameOver = true;
+        gameOverCanvas.gameObject.SetActive(true);
     }
 
     [PunRPC]
