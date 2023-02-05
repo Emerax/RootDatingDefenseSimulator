@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   funGoernForestHealth: 10
   rockHealth: 3
-  treeHealth: 2
-  enemyHealth: 5
+  treeHealth: 1
   timeBetweenWaves: 10
   timeBetweenEnemySpawns: 2
   projectileLifetime: 10
