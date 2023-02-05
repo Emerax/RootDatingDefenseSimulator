@@ -75,7 +75,6 @@ public class TreeButton : MonoBehaviour
         {
             photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.AllBuffered, stats.StatIndexes.ToArray(), stats.generation);
         }
-
     }
 
     /// <summary>
@@ -85,6 +84,15 @@ public class TreeButton : MonoBehaviour
     {
         TreeStatblock treeturnValue = tree;
         photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.All, new int[0], 0);
+        return treeturnValue;
+    }
+
+    /// <summary>
+    /// Returns the tree attached to this button and un-attaches it.
+    /// The button is empty afterwards.
+    public TreeStatblock PeakTreeStats()
+    {
+        TreeStatblock treeturnValue = tree;
         return treeturnValue;
     }
 
