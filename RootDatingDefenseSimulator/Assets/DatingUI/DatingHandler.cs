@@ -37,8 +37,7 @@ public class DatingHandler : MonoBehaviour {
     private void Awake() {
         ProfileSettings = profileSettings;
 
-        if (DEBUG_OFFLINE_PLAY)
-        {
+        if(DEBUG_OFFLINE_PLAY) {
             Debug.LogWarning("PLAYING AS OFFLINE PLAYER!");
         }
     }
@@ -71,9 +70,7 @@ public class DatingHandler : MonoBehaviour {
             }
             else if(GameLogic.PlayerRole is PlayerRole.TOWER_DEFENSER) {
                 treeButtons[i].selectTreeButton.onClick.AddListener(delegate {
-                    GameLogic.SetTreeSelected(integerPointerExorcist,
-                        treeButtons[integerPointerExorcist]);
-
+                    TowerDefensor.SetTreeSelected(treeButtons[integerPointerExorcist]);
                 });
             }
         }
