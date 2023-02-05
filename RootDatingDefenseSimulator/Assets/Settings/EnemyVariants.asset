@@ -67,3 +67,12 @@ MonoBehaviour:
       increaseMovementSpeed: 0.15
       increaseHealth: 0
       increaseAttackDamage: 0.1
+  - id: 6
+    stats:
+      movementSpeed: 0.5
+      health: 20
+      attackDamage: 10
+      verticalOffset: 0
+      increaseMovementSpeed: 0.1
+      increaseHealth: 1
+      increaseAttackDamage: 0.5

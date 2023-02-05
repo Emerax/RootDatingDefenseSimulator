@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyObstacleIgnoring : Enemy {
 
     private float movementSpeed;
+    private float verticalOffset;
 
     public override void OnPhotonInstantiate(PhotonMessageInfo info) {
         base.OnPhotonInstantiate(info);
@@ -13,6 +14,7 @@ public class EnemyObstacleIgnoring : Enemy {
         EnemyStats stats = EnemyStats.FromObjectArray(photonView.InstantiationData);
 
         movementSpeed = stats.movementSpeed;
+        verticalOffset = stats.verticalOffset;
     }
 
     protected override void Move(float distanceToTarget, float deltaTime) {
@@ -34,6 +36,11 @@ public class EnemyObstacleIgnoring : Enemy {
         }
 
         transform.position += movement;
+
+        Vector3 position = transform.position;
+        position.y = verticalOffset;
+        transform.position = position;
+
         debugText.text = $"Targeting {currentTarget.name} diff={toTarget} {distanceToTarget}m / {reachedThreshhold}m";
 
         transform.LookAt(transform.position + toTarget, Vector3.up);

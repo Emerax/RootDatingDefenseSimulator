@@ -78,3 +78,8 @@ MonoBehaviour:
       count: 3
     - enemyVariant: 0
       count: 2
+  - groups:
+    - enemyVariant: 6
+      count: 1
+    - enemyVariant: 0
+      count: 3
