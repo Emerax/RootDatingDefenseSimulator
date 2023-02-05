@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,6 +10,7 @@ using UnityEngine.UI;
 public class DatingHandler : MonoBehaviour {
     [SerializeField] private HorizontalLayoutGroup availableTreeList;
     [SerializeField] private GameObject datingMain;
+    [SerializeField] private DatingSettings datingSettings;
 
     [SerializeField] private TreeStatsSettings profileSettings;
 
@@ -84,7 +86,9 @@ public class DatingHandler : MonoBehaviour {
         for(int i = 0; i < dateAnswerBubble.Length; i++) {
             //integerPointerExorcist explained in the for-loop above
             int integerPointerExorcist = i;
-            dateAnswerBubble[i].button.onClick.AddListener(delegate { AnswerDatePrompt(integerPointerExorcist); });
+            dateAnswerBubble[i].button.onClick.AddListener(delegate { 
+                StartCoroutine(AnswerDatePrompt(integerPointerExorcist)); 
+            });
         }
 
         dateState = DateState.SelectTree;
@@ -156,7 +160,7 @@ public class DatingHandler : MonoBehaviour {
             }
         }
 
-        BeginDate();
+        StartCoroutine(DoDate());
     }
 
     /// <summary>
@@ -210,24 +214,81 @@ public class DatingHandler : MonoBehaviour {
         return new TreeStatblock(younglingStatsIndices);
     }
 
-    public void BeginDate() {
+    IEnumerator DoDate() {
         dateState = DateState.Date;
         dateMinigameParent.SetActive(true);
-        //Todo set emoji prompt
-        //Todo set emoji answers
+
+        for (int i = 0; i < dateAnswerBubble.Length; i++)
+        {
+            dateAnswerBubble[i].gameObject.SetActive(false);
+        }
+        datePromptBubble.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(0.2f);
+        selectedProfiles[0].TriggerAnimation("Talk");
+
+        yield return new WaitForSeconds(1f);
+
+        List<DatingSettings.EmojiMatches> availableEmojiMatches = datingSettings.matchingEmojis.ToList();
+
+        //Choose correct emoji matchings and remove them from randomization list
+        //so they can't be chosen again for wrong-answers
+        int correctEmojiMatchIndex = Random.Range(0, availableEmojiMatches.Count);
+        DatingSettings.EmojiMatches chosenMatch = availableEmojiMatches[correctEmojiMatchIndex];
+        availableEmojiMatches.RemoveAt(correctEmojiMatchIndex);
+
+        //Randomize one of the matches as prompt and one as the answer
+        List<Sprite> emojiMatches = chosenMatch.emoji.ToList();
+        int promptEmojiIndex = Random.Range(0, emojiMatches.Count);
+        Sprite promptEmoji = emojiMatches[promptEmojiIndex];
+        emojiMatches.RemoveAt(promptEmojiIndex);
+        int correctAnswerEmojiIndex = Random.Range(0, emojiMatches.Count);
+        Sprite correctAnswerEmoji = emojiMatches[correctAnswerEmojiIndex];
+        emojiMatches.RemoveAt(correctAnswerEmojiIndex);
+
+        //Set emojis in bubbles
+        datePromptBubble.emoji.sprite = promptEmoji;
+        datePromptBubble.gameObject.SetActive(true);
+        datePromptBubble.animator.SetTrigger("Start");
+        yield return new WaitForSeconds(0.8f);
+
         correctAnswerBubbleIndex = Random.Range(0, dateAnswerBubble.Length);
         for(int i = 0; i < dateAnswerBubble.Length; i++) {
+            //Correct answer should match prompt emoji
             if(i == correctAnswerBubbleIndex) {
-                dateAnswerBubble[i].emoji.color = new Color(1f, 0.6f, 0.5f);
-                continue;
+                dateAnswerBubble[i].emoji.sprite = correctAnswerEmoji;
+            }
+            else
+            {
+                //Otherwise pick an emoji from another random set
+                int randEmojiMatchesIndex = Random.Range(0, availableEmojiMatches.Count);
+                Sprite[] randomMatch = availableEmojiMatches[randEmojiMatchesIndex].emoji;
+                availableEmojiMatches.RemoveAt(randEmojiMatchesIndex);
+                int randomEmojiIndex = Random.Range(0, randomMatch.Length);
+                Sprite randEmoji = randomMatch[randomEmojiIndex];
+
+                dateAnswerBubble[i].emoji.sprite = randEmoji;
             }
 
-            dateAnswerBubble[i].emoji.color = Color.white;
+            dateAnswerBubble[i].gameObject.SetActive(true);
+            dateAnswerBubble[i].animator.SetTrigger("Start");
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
-    private void AnswerDatePrompt(int answerIndex) {
-        if(answerIndex == correctAnswerBubbleIndex) {
+    IEnumerator AnswerDatePrompt(int answerIndex) {
+        for (int i = 0; i < dateAnswerBubble.Length; i++)
+        {
+            if (i == answerIndex) 
+                continue;
+            dateAnswerBubble[i].gameObject.SetActive(false);
+        }
+
+        selectedProfiles[1].TriggerAnimation("Talk");
+        yield return new WaitForSeconds(1.8f);
+        selectedProfiles[0].TriggerAnimation("Talk");
+
+        if (answerIndex == correctAnswerBubbleIndex) {
             TryDate();
         }
         else {

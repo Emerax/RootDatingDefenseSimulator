@@ -14,6 +14,7 @@ public class TreeButton : MonoBehaviour {
     public Image backgroundPattern;
 
     [SerializeField] private GameObject highlightObject;
+    [SerializeField] private Animator emoteAnimator;
     public Button selectTreeButton;
     public int index; //Mostly used for external indexing.
 
@@ -59,6 +60,22 @@ public class TreeButton : MonoBehaviour {
         photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.AllBuffered, parameters: stats.StatIndexes.ToArray());
     }
 
+    /// <summary>
+    /// Returns the tree attached to this button and un-attaches it.
+    /// The button is empty afterwards.
+    public TreeStatblock PopTreeStats() {
+        TreeStatblock treeturnValue = tree;
+        tree = null;
+        UpdateProfile();
+        return treeturnValue;
+    }
+
+    public void TriggerAnimation(string triggerName) {
+        if(emoteAnimator) {
+            emoteAnimator.SetTrigger(triggerName);
+        }
+    }
+
     [PunRPC]
     private void SetTreeProfileRPC(int[] statIndices) {
         if(statIndices.Length == 0) {
@@ -69,15 +86,5 @@ public class TreeButton : MonoBehaviour {
         }
 
         UpdateProfile();
-    }
-
-    /// <summary>
-    /// Returns the tree attached to this button and un-attaches it.
-    /// The button is empty afterwards.
-    public TreeStatblock PopTreeStats() {
-        TreeStatblock treeturnValue = tree;
-        tree = null;
-        UpdateProfile();
-        return treeturnValue;
     }
 }

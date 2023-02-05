@@ -119,5 +119,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8004438435003585563, guid: 9dea075e8c21a64458a6cc17d4fb1263, type: 3}
+      propertyPath: emoteAnimator
+      value: 
+      objectReference: {fileID: 4101749826564092806}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9dea075e8c21a64458a6cc17d4fb1263, type: 3}
+--- !u!95 &4101749826564092806 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6081405527401955664, guid: 9dea075e8c21a64458a6cc17d4fb1263, type: 3}
+  m_PrefabInstance: {fileID: 7820828027192570582}
+  m_PrefabAsset: {fileID: 0}
