@@ -20,6 +20,9 @@ public class EnemyObstacleAvoiding : Enemy {
     #endregion
 
     #region Instance behaviour
+    [SerializeField]
+    private Animator animator;
+
     private readonly float timeBetweenPathUpdatesWhenBlocked = 1f;
 
     private NavMeshAgent navMeshAgent;
@@ -28,6 +31,7 @@ public class EnemyObstacleAvoiding : Enemy {
 
     public override void OnPhotonInstantiate(PhotonMessageInfo info) {
         base.OnPhotonInstantiate(info);
+        Assert.IsNotNull(animator);
 
         EnemyStats stats = EnemyStats.FromObjectArray(photonView.InstantiationData);
 
@@ -55,11 +59,13 @@ public class EnemyObstacleAvoiding : Enemy {
                 timeuntilPathUpdateBlocked -= Time.deltaTime;
             }
             isInDestroyObstaclesMode = true;
+            animator.SetBool("IsDestructive", isInDestroyObstaclesMode);
         }
 
         // Exit open up mode
         if(navMeshAgent.hasPath && navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete) {
             isInDestroyObstaclesMode = false;
+            animator.SetBool("IsDestructive", isInDestroyObstaclesMode);
             debugText.text = $"Targeting {currentTarget.name} {distanceToTarget}m / {reachedThreshhold}m";
         }
 
