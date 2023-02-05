@@ -18,6 +18,9 @@ public class TreeConscript : MonoBehaviourPun {
 
     private float actionCooldown;
     private float timeUntilNextAction;
+    private float timeUntilAutoDeath;
+    private float initialScaleY;
+    private bool isInitialized = false;
 
     private void Awake() {
         Assert.IsNotNull(gameSettings);
@@ -28,14 +31,17 @@ public class TreeConscript : MonoBehaviourPun {
 
     public void Init(TreeStatblock stats) {
         transform.localScale = stats.Size * transform.localScale;
+        initialScaleY = transform.localScale.y;
         actionCooldown = stats.Cooldown;
         timeUntilNextAction = actionCooldown;
+        timeUntilAutoDeath = gameSettings.treeLifetime;
         ability = gameObject.AddComponent<RangedAttackAbility>();
         ability.Init(stats, gameSettings);
+        isInitialized = true;
     }
 
     private void Update() {
-        if(GameLogic.PlayerRole is not PlayerRole.TOWER_DEFENSER) {
+        if(GameLogic.PlayerRole is not PlayerRole.TOWER_DEFENSER || !isInitialized) {
             return;
         }
 
@@ -46,6 +52,20 @@ public class TreeConscript : MonoBehaviourPun {
                 photonView.RPC(nameof(SetAnimationTriggerRPC), RpcTarget.All, "Attack");
                 timeUntilNextAction = actionCooldown;
             }
+        }
+
+        // Auto death / lifetime
+        timeUntilAutoDeath -= Time.deltaTime;
+        if(timeUntilAutoDeath <= 0) {
+            health.Damage(float.MaxValue);
+        }
+        else {
+            float minScaleFactor = gameSettings.minTreeScaleFactorFromLifeLoss;
+            float scaleFactor = minScaleFactor + (1f - minScaleFactor) * timeUntilAutoDeath / gameSettings.treeLifetime;
+
+            Vector3 localScale = transform.localScale;
+            localScale.y = scaleFactor * initialScaleY;
+            transform.localScale = localScale;
         }
     }
 

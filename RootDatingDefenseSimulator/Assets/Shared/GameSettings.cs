@@ -12,5 +12,7 @@ public class GameSettings : ScriptableObject {
     public float timeBetweenEnemySpawns;
 
     [Header("Other Settings")]
+    public float minTreeScaleFactorFromLifeLoss;
+    public float treeLifetime;
     public float projectileLifetime;
 }
