@@ -193,10 +193,12 @@ public class DatingHandler : MonoBehaviour {
         TreeStatblock child2 = DateQuoteOnQuote(trees[tree1Index], trees[tree2Index]);
 
         //Replace adults with children
-        trees[tree1Index] = child1;
         trees[tree2Index] = child2;
+        trees[tree1Index] = child1;
         DisplayTreeProfile(child1, treeButtons[tree1Index]);
         DisplayTreeProfile(child2, treeButtons[tree2Index]);
+        treeButtons[tree1Index].TriggerAnimation("NewTree");
+        treeButtons[tree2Index].TriggerAnimation("NewTree");
 
         //Update dating profile pictures.
         EndDateAndReturnDaters();

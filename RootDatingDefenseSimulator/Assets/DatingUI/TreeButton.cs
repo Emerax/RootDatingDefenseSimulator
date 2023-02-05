@@ -54,9 +54,6 @@ public class TreeButton : MonoBehaviour {
 
     public void TriggerAnimation(string triggerName)
     {
-        if (emoteAnimator)
-        {
-            emoteAnimator.SetTrigger(triggerName);
-        }
+        emoteAnimator.SetTrigger(triggerName);
     }
 }
