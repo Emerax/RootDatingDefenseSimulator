@@ -68,14 +68,12 @@ public class TreeButton : MonoBehaviour
     {
         if (stats == null)
         {
-            object[] treeParams = new object[] { new int[0], 0 };
-            photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.AllBuffered, parameters: treeParams);
+            photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.AllBuffered, new int[0], 0);
             return;
         }
         else
         {
-            object[] treeParams = new object[] { stats.StatIndexes.ToArray(), stats.generation };
-            photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.AllBuffered, parameters: treeParams);
+            photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.AllBuffered, stats.StatIndexes.ToArray(), stats.generation);
         }
 
     }
@@ -86,7 +84,7 @@ public class TreeButton : MonoBehaviour
     public TreeStatblock PopTreeStats()
     {
         TreeStatblock treeturnValue = tree;
-        photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.All, parameters: new int[0]);
+        photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.All, new int[0], 0);
         return treeturnValue;
     }
 
