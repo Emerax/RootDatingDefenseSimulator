@@ -1,10 +1,12 @@
+using Photon.Pun;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(DestructableObstacle))]
-public class TreeConscript : MonoBehaviour {
+public class TreeConscript : MonoBehaviourPun {
+
     private Health health;
     private TreeAbility ability;
     [SerializeField]
@@ -41,7 +43,7 @@ public class TreeConscript : MonoBehaviour {
         if(timeUntilNextAction <= 0) {
             bool didAbility = ability.TryPerform();
             if(didAbility) {
-                animator.SetTrigger("Attack");
+                photonView.RPC(nameof(SetAnimationTriggerRPC), RpcTarget.All, "Attack");
                 timeUntilNextAction = actionCooldown;
             }
         }
@@ -55,5 +57,10 @@ public class TreeConscript : MonoBehaviour {
         if(health <= 0) {
             onDeath?.Invoke();
         }
+    }
+
+    [PunRPC]
+    private void SetAnimationTriggerRPC(string name) {
+        animator.SetTrigger(name);
     }
 }

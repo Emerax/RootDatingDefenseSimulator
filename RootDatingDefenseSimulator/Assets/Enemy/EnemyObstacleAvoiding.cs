@@ -62,13 +62,13 @@ public class EnemyObstacleAvoiding : Enemy {
                 timeuntilPathUpdateBlocked -= Time.deltaTime;
             }
             isInDestroyObstaclesMode = true;
-            animator.SetBool("IsDestructive", isInDestroyObstaclesMode);
+            photonView.RPC(nameof(SetAnimationBoolRPC), RpcTarget.All, "IsDestructive", isInDestroyObstaclesMode);
         }
 
         // Exit open up mode
         if(navMeshAgent.hasPath && navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete) {
             isInDestroyObstaclesMode = false;
-            animator.SetBool("IsDestructive", isInDestroyObstaclesMode);
+            photonView.RPC(nameof(SetAnimationBoolRPC), RpcTarget.All, "IsDestructive", isInDestroyObstaclesMode);
             debugText.text = $"Targeting {currentTarget.name} {distanceToTarget}m / {reachedThreshhold}m";
         }
 
@@ -104,6 +104,11 @@ public class EnemyObstacleAvoiding : Enemy {
 
     private Health GetClosestDestructableObstacle(Vector3 position) {
         return GetClosestHealth(destructableObjects, position);
+    }
+
+    [PunRPC]
+    private void SetAnimationBoolRPC(string name, bool value) {
+        animator.SetBool(name, value);
     }
 
     #endregion
