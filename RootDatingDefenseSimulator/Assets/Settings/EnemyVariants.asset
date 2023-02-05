@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fda948a8097a34ca7bb8115973ad3d, type: 3}
+  m_Name: EnemyVariants
+  m_EditorClassIdentifier: 
+  variants:
+  - id: 0
+    stats:
+      movementSpeed: 1
+      health: 2
+      attackDamage: 1
+      verticalOffset: 0
+      increaseMovementSpeed: 0.1
+      increaseHealth: 0.2
+      increaseAttackDamage: 0.2
+  - id: 1
+    stats:
+      movementSpeed: 0.5
+      health: 4
+      attackDamage: 1.5
+      verticalOffset: 0
+      increaseMovementSpeed: 0
+      increaseHealth: 0.3
+      increaseAttackDamage: 0.3
+  - id: 2
+    stats:
+      movementSpeed: 1.5
+      health: 1
+      attackDamage: 1
+      verticalOffset: 0
+      increaseMovementSpeed: 0.15
+      increaseHealth: 0
+      increaseAttackDamage: 0.1
+  - id: 3
+    stats:
+      movementSpeed: 1
+      health: 2
+      attackDamage: 1
+      verticalOffset: 2
+      increaseMovementSpeed: 0.1
+      increaseHealth: 0.2
+      increaseAttackDamage: 0.2
+  - id: 4
+    stats:
+      movementSpeed: 0.5
+      health: 4
+      attackDamage: 1.5
+      verticalOffset: 1
+      increaseMovementSpeed: 0
+      increaseHealth: 0.3
+      increaseAttackDamage: 0.3
+  - id: 5
+    stats:
+      movementSpeed: 1.5
+      health: 1
+      attackDamage: 1
+      verticalOffset: 3
+      increaseMovementSpeed: 0.15
+      increaseHealth: 0
+      increaseAttackDamage: 0.1

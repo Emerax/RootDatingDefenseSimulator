@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab93c1f493129b441b32ebe21b215331, type: 3}
+  m_Name: WaveSettings
+  m_EditorClassIdentifier: 
+  waves:
+  - groups:
+    - enemyVariant: 0
+      count: 3
+    - enemyVariant: 1
+      count: 1
+  - groups:
+    - enemyVariant: 0
+      count: 2
+    - enemyVariant: 2
+      count: 2
+  - groups:
+    - enemyVariant: 2
+      count: 3
+    - enemyVariant: 1
+      count: 2
+  - groups:
+    - enemyVariant: 2
+      count: 2
+    - enemyVariant: 1
+      count: 2
+    - enemyVariant: 3
+      count: 2
+  - groups:
+    - enemyVariant: 0
+      count: 3
+    - enemyVariant: 5
+      count: 3
+    - enemyVariant: 1
+      count: 1
+  - groups:
+    - enemyVariant: 2
+      count: 4
+    - enemyVariant: 1
+      count: 3
+  - groups:
+    - enemyVariant: 3
+      count: 4
+    - enemyVariant: 4
+      count: 2
+    - enemyVariant: 5
+      count: 2
+  - groups:
+    - enemyVariant: 0
+      count: 5
+    - enemyVariant: 4
+      count: 3
+  - groups:
+    - enemyVariant: 5
+      count: 4
+    - enemyVariant: 2
+      count: 3
+    - enemyVariant: 1
+      count: 2
+  - groups:
+    - enemyVariant: 1
+      count: 5
+  - groups:
+    - enemyVariant: 2
+      count: 3
+    - enemyVariant: 1
+      count: 4
+    - enemyVariant: 4
+      count: 3
+    - enemyVariant: 0
+      count: 2

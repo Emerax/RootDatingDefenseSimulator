@@ -48,15 +48,22 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
     private Health currentTarget = null;
     private bool isInDestroyObstaclesMode = false;
     private float timeuntilPathUpdateBlocked = 0f;
+    private float attackDamage;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         Assert.IsNotNull(gameSettings);
         Assert.IsNotNull(hitPos);
         Assert.IsNotNull(debugText);
+
+        EnemyStats stats = EnemyStats.FromObjectArray(photonView.InstantiationData);
+
+        attackDamage = stats.attackDamage;
         navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = stats.movementSpeed;
         Health = GetComponent<Health>();
-        Health.Init(gameSettings.enemyHealth);
+        Health.Init(stats.health);
         Health.AddHealthListener(CheckHealth);
+        // Todo: Use vertical offset
         if(GameLogic.PlayerRole != PlayerRole.TOWER_DEFENSER) {
             navMeshAgent.enabled = false;
         }
@@ -75,7 +82,7 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
             distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
             if(distanceToTarget <= reachedThreshhold) {
                 debugText.text = $"Dying";
-                currentTarget.Damage(gameSettings.enemyDamage);
+                currentTarget.Damage(attackDamage);
                 PhotonNetwork.Destroy(photonView);
                 return;
             }
@@ -108,7 +115,7 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
             float distranceToObstacle = Vector3.Distance(obstaclePosition, transform.position);
             if(distranceToObstacle <= reachedThreshhold) {
                 debugText.text = $"DESTRUCTIVE\nDying";
-                closestDestructableObstacle.Damage(gameSettings.enemyDamage);
+                closestDestructableObstacle.Damage(attackDamage);
                 PhotonNetwork.Destroy(photonView);
                 return;
             }

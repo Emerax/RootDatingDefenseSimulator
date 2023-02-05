@@ -6,12 +6,11 @@ public class GameSettings : ScriptableObject {
     public float funGoernForestHealth;
     public float rockHealth;
     public float treeHealth;
-    public float enemyHealth;
 
-    [Header("Damage Settings")]
-    public float enemyDamage;
-
-    [Header("Spawn Settings")]
+    [Header("Wave Settings")]
+    public float timeBetweenWaves;
     public float timeBetweenEnemySpawns;
+
+    [Header("Other Settings")]
     public float projectileLifetime;
 }
