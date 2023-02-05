@@ -219,11 +219,11 @@ public class DatingHandler : MonoBehaviour {
         for (int i = 0; i < datingSettings.numChildrenPerDate; i++)
         {
             TreeStatblock child = DateQuoteOnQuote(
-                treeButtons[tree1Index].PeakTreeStats(), 
-                treeButtons[tree2Index].PeakTreeStats());
+                selectedProfiles[0].PeakTreeStats(),
+                selectedProfiles[1].PeakTreeStats());
             float avarageGeneration = 
-                (treeButtons[tree1Index].PeakTreeStats().generation +
-                treeButtons[tree2Index].PeakTreeStats().generation) / 2.0f;
+                (selectedProfiles[0].PeakTreeStats().generation +
+                selectedProfiles[1].PeakTreeStats().generation) / 2.0f;
             child.generation = Mathf.RoundToInt(avarageGeneration) + 1;
 
             //Find open spot for child
