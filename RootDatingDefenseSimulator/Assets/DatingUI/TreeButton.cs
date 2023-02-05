@@ -76,6 +76,7 @@ public class TreeButton : MonoBehaviour {
 
     [PunRPC]
     private void SetTreeProfileRPC(int[] statIndices) {
+        Debug.Log($"Tree Button {name} received {statIndices.Length} indices");
         if(statIndices.Length == 0) {
             tree = null;
         }

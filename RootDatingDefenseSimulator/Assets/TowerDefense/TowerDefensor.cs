@@ -39,6 +39,10 @@ public class TowerDefensor : MonoBehaviour {
             currentlySelected.Highlight(false);
         }
 
+        if(treeButton.IsEmpty) {
+            return;
+        }
+
         currentlySelected = treeButton;
         treeButton.Highlight(true);
     }
