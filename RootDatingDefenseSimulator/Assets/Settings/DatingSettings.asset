@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c7694e72bc6224da2273bddf1bb432, type: 3}
+  m_Name: DatingSettings
+  m_EditorClassIdentifier: 
+  matchingEmojis:
+  - name: Dragon-Wizard
+    emoji:
+    - {fileID: 21300000, guid: d2a0911f3fef28c41be56b5a5a8258e3, type: 3}
+    - {fileID: 21300000, guid: f9fedd1f454974e45909ddf9e148bfa5, type: 3}
+  - name: Guitar-Rock
+    emoji:
+    - {fileID: 21300000, guid: 7943115aebda523458ad5a1c0a1b9328, type: 3}
+    - {fileID: 21300000, guid: 8040378b09a7e5e43bb966fd77089811, type: 3}
+  - name: Tree-Tree
+    emoji:
+    - {fileID: 21300000, guid: 25329eaf3c336ec448f7f52ea15b756f, type: 3}
+    - {fileID: 21300000, guid: b9b9f7fd50d4b78428b58b33c9f4581c, type: 3}

@@ -525,6 +525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availableTreeList: {fileID: 1566630662410509121}
   datingMain: {fileID: 3340401846779704318}
+  datingSettings: {fileID: 11400000, guid: 8a033b429795b9d4998d6c51a8c136b9, type: 2}
   profileSettings: {fileID: 11400000, guid: b86bdf9fb0617584db94d41da0e1322c, type: 2}
   treeButtons:
   - {fileID: 3763218254783446124}
@@ -544,6 +545,7 @@ MonoBehaviour:
   - {fileID: 8228195911649265770}
   - {fileID: 946180619450437655}
   - {fileID: 3637786533529377922}
+  DEBUG_OFFLINE_PLAY: 1
 --- !u!1 &3340401846779704318
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,7 +600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9118029209349754469
 RectTransform:
   m_ObjectHideFlags: 0
