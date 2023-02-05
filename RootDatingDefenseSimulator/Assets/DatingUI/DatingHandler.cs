@@ -14,14 +14,13 @@ public class DatingHandler : MonoBehaviour {
 
     [SerializeField] private TreeButton[] treeButtons;
     [SerializeField] private TreeButton[] selectedProfiles;
-    [SerializeField] private GameObject datePrompt;
-    [SerializeField] private Button datePromptYesButton;
-    [SerializeField] private Button datePromptNoButton;
 
     [SerializeField] private GameObject dateMinigameParent;
     [SerializeField] private DatingSpeechBubble datePromptBubble;
     [SerializeField] private DatingSpeechBubble[] dateAnswerBubble;
     private int correctAnswerBubbleIndex;
+
+    [SerializeField] private bool DEBUG_OFFLINE_PLAY = false;
 
     public static TreeStatsSettings ProfileSettings { get; private set; }
 
@@ -35,6 +34,11 @@ public class DatingHandler : MonoBehaviour {
     /// </summary>
     private void Awake() {
         ProfileSettings = profileSettings;
+
+        if (DEBUG_OFFLINE_PLAY)
+        {
+            Debug.LogWarning("PLAYING AS OFFLINE PLAYER!");
+        }
     }
 
     /// <summary>
@@ -57,14 +61,17 @@ public class DatingHandler : MonoBehaviour {
 
             //Apparently i is a pointer, so let's exorcise that little guy.
             int integerPointerExorcist = i;
-            if(GameLogic.PlayerRole is PlayerRole.DATING_SIMULATOR) {
+            if(GameLogic.PlayerRole is PlayerRole.DATING_SIMULATOR ||
+                DEBUG_OFFLINE_PLAY) {
                 treeButtons[i].selectTreeButton.onClick.AddListener(delegate {
                     SelectTree(integerPointerExorcist);
                 });
             }
             else if(GameLogic.PlayerRole is PlayerRole.TOWER_DEFENSER) {
                 treeButtons[i].selectTreeButton.onClick.AddListener(delegate {
-                    GameLogic.SetTreeSelected(integerPointerExorcist);
+                    GameLogic.SetTreeSelected(integerPointerExorcist,
+                        treeButtons[integerPointerExorcist]);
+
                 });
             }
         }
@@ -83,10 +90,7 @@ public class DatingHandler : MonoBehaviour {
             dateAnswerBubble[i].button.onClick.AddListener(delegate { AnswerDatePrompt(integerPointerExorcist); });
         }
 
-        datePromptYesButton.onClick.AddListener(TryDate);
-
         dateState = DateState.SelectTree;
-        datePrompt.SetActive(false);
         dateMinigameParent.SetActive(false);
     }
 
@@ -108,8 +112,7 @@ public class DatingHandler : MonoBehaviour {
 
             treeButtons[treeIndex].Highlight(false);
             //recover selected tree to list
-            treeButtons[treeIndex].gameObject.SetActive(true);
-            ShouldShowDatePrompt();
+            ShouldBeginDate();
             return;
         }
 
@@ -124,13 +127,10 @@ public class DatingHandler : MonoBehaviour {
             selectedProfiles[i].index = treeIndex;
             treeButtons[treeIndex].Highlight(true);
 
-            //Remove selected tree from list
-            treeButtons[treeIndex].gameObject.SetActive(false);
-
             break;
         }
 
-        ShouldShowDatePrompt();
+        ShouldBeginDate();
     }
 
     public static TreeStatblock GenerateRandomTreeStats() {
@@ -152,10 +152,9 @@ public class DatingHandler : MonoBehaviour {
         button.SetTree(tree);
     }
 
-    private void ShouldShowDatePrompt() {
+    private void ShouldBeginDate() {
         for(int i = 0; i < selectedProfiles.Length; i++) {
             if(!selectedProfiles[i].gameObject.activeInHierarchy) {
-                datePrompt.SetActive(false);
                 return;
             }
         }
@@ -197,7 +196,6 @@ public class DatingHandler : MonoBehaviour {
 
         //Update dating profile pictures.
         EndDateAndReturnDaters();
-
     }
 
     public TreeStatblock DateQuoteOnQuote(TreeStatblock tree1, TreeStatblock tree2) {

@@ -25,6 +25,12 @@ public class TreeButton : MonoBehaviour {
 
     public void Highlight(bool highlightOn) {
         highlightObject.SetActive(highlightOn);
+        selectTreeButton.interactable = !highlightOn;
+    }
+
+    public bool GetHighlight()
+    {
+        return highlightObject.activeInHierarchy;
     }
 
     public void UpdateProfile() {

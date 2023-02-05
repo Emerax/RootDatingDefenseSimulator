@@ -120,7 +120,8 @@ public class GameLogic : MonoBehaviourPunCallbacks {
         Debug.Log($"{info.Sender.NickName}: Hello!");
     }
 
-    public static void SetTreeSelected(int integerPointerExorcist) {
+    public static void SetTreeSelected(int integerPointerExorcist, TreeButton treeButton) {
 
+        treeButton.Highlight(true);
     }
 }
