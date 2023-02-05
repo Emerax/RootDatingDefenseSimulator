@@ -30,6 +30,7 @@ public enum EnemyVariantID {
     FlyingWeak = 3,
     FlyingStrong = 4,
     FlyingFast = 5,
+    BigBoss = 6,
 }
 
 [Serializable]
