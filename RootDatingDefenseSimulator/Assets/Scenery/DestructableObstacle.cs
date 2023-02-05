@@ -9,7 +9,7 @@ public class DestructableObstacle : MonoBehaviourPun {
     private void Awake() {
         health = GetComponent<Health>();
         health.AddHealthListener(CheckDeath);
-        Enemy.RegisterDestructableObstacle(health);
+        EnemyObstacleAvoiding.RegisterDestructableObstacle(health);
     }
 
     private void CheckDeath(float health, float maxHealth) {
@@ -19,6 +19,6 @@ public class DestructableObstacle : MonoBehaviourPun {
     }
 
     private void OnDestroy() {
-        Enemy.DeregisterDestructableObstacle(health);
+        EnemyObstacleAvoiding.DeregisterDestructableObstacle(health);
     }
 }
