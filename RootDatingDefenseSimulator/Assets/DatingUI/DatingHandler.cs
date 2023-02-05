@@ -14,9 +14,6 @@ public class DatingHandler : MonoBehaviour {
 
     [SerializeField] private TreeButton[] treeButtons;
     [SerializeField] private TreeButton[] selectedProfiles;
-    [SerializeField] private GameObject datePrompt;
-    [SerializeField] private Button datePromptYesButton;
-    [SerializeField] private Button datePromptNoButton;
 
     [SerializeField] private GameObject dateMinigameParent;
     [SerializeField] private DatingSpeechBubble datePromptBubble;
@@ -83,10 +80,7 @@ public class DatingHandler : MonoBehaviour {
             dateAnswerBubble[i].button.onClick.AddListener(delegate { AnswerDatePrompt(integerPointerExorcist); });
         }
 
-        datePromptYesButton.onClick.AddListener(TryDate);
-
         dateState = DateState.SelectTree;
-        datePrompt.SetActive(false);
         dateMinigameParent.SetActive(false);
     }
 
@@ -109,7 +103,7 @@ public class DatingHandler : MonoBehaviour {
             treeButtons[treeIndex].Highlight(false);
             //recover selected tree to list
             treeButtons[treeIndex].gameObject.SetActive(true);
-            ShouldShowDatePrompt();
+            ShouldBeginDate();
             return;
         }
 
@@ -130,7 +124,7 @@ public class DatingHandler : MonoBehaviour {
             break;
         }
 
-        ShouldShowDatePrompt();
+        ShouldBeginDate();
     }
 
     public static TreeStatblock GenerateRandomTreeStats() {
@@ -152,10 +146,9 @@ public class DatingHandler : MonoBehaviour {
         button.SetTree(tree);
     }
 
-    private void ShouldShowDatePrompt() {
+    private void ShouldBeginDate() {
         for(int i = 0; i < selectedProfiles.Length; i++) {
             if(!selectedProfiles[i].gameObject.activeInHierarchy) {
-                datePrompt.SetActive(false);
                 return;
             }
         }
@@ -197,7 +190,6 @@ public class DatingHandler : MonoBehaviour {
 
         //Update dating profile pictures.
         EndDateAndReturnDaters();
-
     }
 
     public TreeStatblock DateQuoteOnQuote(TreeStatblock tree1, TreeStatblock tree2) {
