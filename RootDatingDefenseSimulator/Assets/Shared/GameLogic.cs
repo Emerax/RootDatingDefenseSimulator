@@ -119,9 +119,4 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     private void SayHelloRPC(PhotonMessageInfo info) {
         Debug.Log($"{info.Sender.NickName}: Hello!");
     }
-
-    public static void SetTreeSelected(int integerPointerExorcist, TreeButton treeButton) {
-
-        treeButton.Highlight(true);
-    }
 }
