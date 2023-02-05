@@ -20,6 +20,8 @@ public class DatingHandler : MonoBehaviour {
     [SerializeField] private DatingSpeechBubble[] dateAnswerBubble;
     private int correctAnswerBubbleIndex;
 
+    [SerializeField] private bool DEBUG_OFFLINE_PLAY = false;
+
     public static TreeStatsSettings ProfileSettings { get; private set; }
 
     private TreeStatblock[] trees;
@@ -32,6 +34,11 @@ public class DatingHandler : MonoBehaviour {
     /// </summary>
     private void Awake() {
         ProfileSettings = profileSettings;
+
+        if (DEBUG_OFFLINE_PLAY)
+        {
+            Debug.LogWarning("PLAYING AS OFFLINE PLAYER!");
+        }
     }
 
     /// <summary>
@@ -54,14 +61,17 @@ public class DatingHandler : MonoBehaviour {
 
             //Apparently i is a pointer, so let's exorcise that little guy.
             int integerPointerExorcist = i;
-            if(GameLogic.PlayerRole is PlayerRole.DATING_SIMULATOR) {
+            if(GameLogic.PlayerRole is PlayerRole.DATING_SIMULATOR ||
+                DEBUG_OFFLINE_PLAY) {
                 treeButtons[i].selectTreeButton.onClick.AddListener(delegate {
                     SelectTree(integerPointerExorcist);
                 });
             }
             else if(GameLogic.PlayerRole is PlayerRole.TOWER_DEFENSER) {
                 treeButtons[i].selectTreeButton.onClick.AddListener(delegate {
-                    GameLogic.SetTreeSelected(integerPointerExorcist);
+                    GameLogic.SetTreeSelected(integerPointerExorcist,
+                        treeButtons[integerPointerExorcist]);
+
                 });
             }
         }
@@ -102,7 +112,6 @@ public class DatingHandler : MonoBehaviour {
 
             treeButtons[treeIndex].Highlight(false);
             //recover selected tree to list
-            treeButtons[treeIndex].gameObject.SetActive(true);
             ShouldBeginDate();
             return;
         }
@@ -117,9 +126,6 @@ public class DatingHandler : MonoBehaviour {
             selectedProfiles[i].gameObject.SetActive(true);
             selectedProfiles[i].index = treeIndex;
             treeButtons[treeIndex].Highlight(true);
-
-            //Remove selected tree from list
-            treeButtons[treeIndex].gameObject.SetActive(false);
 
             break;
         }
