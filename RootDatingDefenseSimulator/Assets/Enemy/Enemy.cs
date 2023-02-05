@@ -2,23 +2,12 @@ using Photon.Pun;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Assertions;
 
-[RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
 
-    #region Static destructable obstacle / potential target management
-    private static readonly HashSet<Health> destructableObjects = new();
+    #region Static potential target management
     private static readonly HashSet<Health> potentialStaticTargets = new();
-
-    public static void RegisterDestructableObstacle(Health health) {
-        destructableObjects.Add(health);
-    }
-
-    public static void DeregisterDestructableObstacle(Health health) {
-        destructableObjects.Remove(health);
-    }
 
     public static void RegisterStaticTarget(Health health) {
         potentialStaticTargets.Add(health);
@@ -34,23 +23,20 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
     #endregion
 
     #region Instance behaviour
-    private NavMeshAgent navMeshAgent;
     public Health Health { get; private set; }
     [SerializeField]
     private GameSettings gameSettings;
     [SerializeField]
     private Transform hitPos;
     [SerializeField]
-    private TMP_Text debugText;
+    protected TMP_Text debugText;
     public Transform HitPos { get => hitPos; }
 
-    private readonly float timeBetweenPathUpdatesWhenBlocked = 1f;
-    private Health currentTarget = null;
-    private bool isInDestroyObstaclesMode = false;
-    private float timeuntilPathUpdateBlocked = 0f;
-    private float attackDamage;
+    protected Health currentTarget = null;
+    protected float attackDamage;
+    protected float reachedThreshhold;
 
-    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+    public virtual void OnPhotonInstantiate(PhotonMessageInfo info) {
         Assert.IsNotNull(gameSettings);
         Assert.IsNotNull(hitPos);
         Assert.IsNotNull(debugText);
@@ -58,28 +44,31 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
         EnemyStats stats = EnemyStats.FromObjectArray(photonView.InstantiationData);
 
         attackDamage = stats.attackDamage;
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = stats.movementSpeed;
         Health = GetComponent<Health>();
         Health.Init(stats.health);
         Health.AddHealthListener(CheckHealth);
-        // Todo: Use vertical offset
-        if(GameLogic.PlayerRole != PlayerRole.TOWER_DEFENSER) {
-            navMeshAgent.enabled = false;
+
+        Vector3 position = transform.position;
+        position.y = stats.verticalOffset;
+        transform.position = position;
+
+        if(TryGetComponent(out CapsuleCollider collider)) {
+            reachedThreshhold = collider.radius * 1.1f;
         }
     }
 
-    private void Update() {
+    protected virtual void Update() {
         if(GameLogic.PlayerRole != PlayerRole.TOWER_DEFENSER) {
             debugText.gameObject.SetActive(false);
             return;
         }
-        float reachedThreshhold = navMeshAgent.radius * 1.1f;
 
         // Try damage target
         float distanceToTarget = float.NaN;
         if(currentTarget != null) {
-            distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
+            Vector3 toTarget = currentTarget.transform.position - transform.position;
+            toTarget.y = 0f;
+            distanceToTarget = toTarget.magnitude;
             if(distanceToTarget <= reachedThreshhold) {
                 debugText.text = $"Dying";
                 currentTarget.Damage(attackDamage);
@@ -88,47 +77,12 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
             }
         }
 
-        // Try reset / open up path
-        if(!navMeshAgent.hasPath || navMeshAgent.pathStatus != NavMeshPathStatus.PathComplete) {
-            if(timeuntilPathUpdateBlocked <= 0f) {
-                timeuntilPathUpdateBlocked = timeBetweenPathUpdatesWhenBlocked;
-                UpdateTarget();
-            }
-            else {
-                timeuntilPathUpdateBlocked -= Time.deltaTime;
-            }
-            isInDestroyObstaclesMode = true;
-        }
-
-        // Exit open up mode
-        if(navMeshAgent.hasPath && navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete) {
-            isInDestroyObstaclesMode = false;
-            debugText.text = $"Targeting {currentTarget} {distanceToTarget}m / {reachedThreshhold}m";
-        }
-
-        // Try damage obstacle to open up path
-        if(isInDestroyObstaclesMode) {
-            Health closestDestructableObstacle = GetClosestDestructableObstacle(transform.position);
-            Assert.IsNotNull(closestDestructableObstacle);
-
-            Vector3 obstaclePosition = GetClosestPoint(closestDestructableObstacle.transform);
-            float distranceToObstacle = Vector3.Distance(obstaclePosition, transform.position);
-            if(distranceToObstacle <= reachedThreshhold) {
-                debugText.text = $"DESTRUCTIVE\nDying";
-                closestDestructableObstacle.Damage(attackDamage);
-                PhotonNetwork.Destroy(photonView);
-                return;
-            }
-            else {
-                debugText.text = $"DESTRUCTIVE\nTargeting {currentTarget} {distranceToObstacle}m / {reachedThreshhold}m " +
-                    $"hasPath={navMeshAgent.hasPath} pathStatus={navMeshAgent.pathStatus}";
-            }
-        }
+        Move(distanceToTarget, Time.deltaTime);
 
         // Reset target on target death etc.
         if(!potentialStaticTargets.Contains(currentTarget)) {
             currentTarget = null;
-            navMeshAgent.isStopped = true;
+            OnTargetLost();
             debugText.text = $"No target";
         }
 
@@ -138,13 +92,22 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
             debugText.text = $"Fresh target";
         }
     }
+    protected virtual void Move(float distanceToTarget, float deltaTime) {
 
-    private void UpdateTarget() {
+    }
+
+    protected virtual void OnTargetLost() {
+
+    }
+
+    protected virtual void OnTargetSet() {
+
+    }
+
+    protected virtual void UpdateTarget() {
         currentTarget = GetClosestTarget(transform.position);
-
         if(currentTarget != null) {
-            navMeshAgent.isStopped = false;
-            navMeshAgent.destination = currentTarget.transform.position;
+            OnTargetSet();
         }
     }
 
@@ -152,11 +115,7 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
         return GetClosestHealth(potentialStaticTargets, position);
     }
 
-    private Health GetClosestDestructableObstacle(Vector3 position) {
-        return GetClosestHealth(destructableObjects, position);
-    }
-
-    private Health GetClosestHealth(HashSet<Health> healths, Vector3 position) {
+    protected Health GetClosestHealth(HashSet<Health> healths, Vector3 position) {
         Health closestHealth = null;
         float closestDistance = float.MaxValue;
         foreach(Health health in healths) {
@@ -173,7 +132,7 @@ public class Enemy : MonoBehaviourPun, IPunInstantiateMagicCallback {
         return closestHealth;
     }
 
-    private Vector3 GetClosestPoint(Transform other) {
+    protected Vector3 GetClosestPoint(Transform other) {
         Vector3 position = other.position;
         if(other.TryGetComponent(out Collider collider)) {
             position = collider.ClosestPointOnBounds(transform.position);
