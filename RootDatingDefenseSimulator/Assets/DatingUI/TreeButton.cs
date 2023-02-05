@@ -50,6 +50,7 @@ public class TreeButton : MonoBehaviour {
             backgroundPattern.sprite = tree.BackgroundPattern;
             backgroundPattern.color = tree.PatternCol;
         }
+        selectTreeButton.interactable = tree != null;
     }
 
     public void SetTree(TreeStatblock stats) {

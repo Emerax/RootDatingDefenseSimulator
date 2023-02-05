@@ -12,5 +12,6 @@ public class DatingSettings : ScriptableObject
         public Sprite[] emoji;
     }
 
+    public int numStartTrees = 4;
     public EmojiMatches[] matchingEmojis;
 }

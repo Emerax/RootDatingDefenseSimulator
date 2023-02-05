@@ -55,7 +55,14 @@ public class DatingHandler : MonoBehaviour {
 
         if(GameLogic.PlayerRole is PlayerRole.DATING_SIMULATOR || DEBUG_OFFLINE_PLAY) {
             for(int i = 0; i < numCharacters; i++) {
-                trees[i] = GenerateRandomTreeStats();
+                if(i < datingSettings.numStartTrees)
+                {
+                    trees[i] = GenerateRandomTreeStats();
+                }
+                else
+                {
+                    trees[i] = null;
+                }
             }
         }
 
