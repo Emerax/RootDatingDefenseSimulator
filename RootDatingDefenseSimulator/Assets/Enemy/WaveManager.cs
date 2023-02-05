@@ -17,7 +17,7 @@ public class WaveManager : MonoBehaviour {
     private EnemyVariants enemyVariants;
 
     [SerializeField]
-    private List<Transform> enemySpawnPoints;
+    private List<EnemySpawnPoint> enemySpawnPoints;
 
     private bool isInitalized = false;
     private int waveIndex = -1;
@@ -73,13 +73,14 @@ public class WaveManager : MonoBehaviour {
     }
 
     private void SpawnGroup() {
-        foreach(Transform spawnPoint in enemySpawnPoints) {
+        foreach(EnemySpawnPoint spawnPoint in enemySpawnPoints) {
             if(enemiesLeftToSpawn.Count == 0) {
                 return;
             }
             int index = enemiesLeftToSpawn.Count - 1;
             EnemyVariant enemyVariant = enemiesLeftToSpawn[index];
-            PhotonNetwork.Instantiate($"Enemy{enemyVariant.id}", spawnPoint.position, Quaternion.identity, 0, enemyVariant.stats.ToObjectArray());
+            PhotonNetwork.Instantiate($"Enemy{enemyVariant.id}", spawnPoint.transform.position, Quaternion.identity, 0, enemyVariant.stats.ToObjectArray());
+            spawnPoint.OnSpawn();
             enemiesLeftToSpawn.RemoveAt(index);
         }
     }
