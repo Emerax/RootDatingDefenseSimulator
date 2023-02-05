@@ -8,9 +8,12 @@ using UnityEngine;
 public class TreeStatblock {
     readonly List<int> stats = new();
 
-    public TreeStatblock(List<int> stats) {
+    public TreeStatblock(List<int> stats, int generation = 0) {
         this.stats = stats;
+        this.generation = generation;
     }
+
+    public int generation;
 
     public System.Collections.ObjectModel.ReadOnlyCollection<int> StatIndexes => stats.AsReadOnly();
 
@@ -22,9 +25,11 @@ public class TreeStatblock {
     public Sprite BackgroundPattern => DatingHandler.ProfileSettings.PatternSprites[stats[4]];
 
     //Fighter stats
-    public float Attack => DatingHandler.ProfileSettings.AttackTiers[stats[0]];
+    public float Attack => DatingHandler.ProfileSettings.AttackTiers[stats[0]] +
+        generation * DatingHandler.ProfileSettings.attackByGenerationMultiplier;
     public float Cooldown => DatingHandler.ProfileSettings.CooldownTiers[stats[6]];
     public float Range => DatingHandler.ProfileSettings.RangeTiers[stats[2]];
-    public float Size => DatingHandler.ProfileSettings.SizeTiers[stats[4]];
+    public float Size => DatingHandler.ProfileSettings.SizeTiers[stats[4]] +
+        generation * DatingHandler.ProfileSettings.sizeByGenerationMultiplier;
     public System.Type Ability => DatingHandler.ProfileSettings.Abilities[stats[9]];
 }

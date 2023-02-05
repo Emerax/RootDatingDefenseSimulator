@@ -32,6 +32,8 @@ public class DatingHandler : MonoBehaviour {
     private DateState dateState;
     private int numCharacters;
 
+    private float spawnNewTreeTimer;
+
     /// <summary>
     /// Debug purposes. Later characters will be shared.
     /// </summary>
@@ -40,6 +42,12 @@ public class DatingHandler : MonoBehaviour {
 
         if(DEBUG_OFFLINE_PLAY) {
             Debug.LogWarning("PLAYING AS OFFLINE PLAYER!");
+        }
+
+        if(GameLogic.PlayerRole is PlayerRole.DATING_SIMULATOR ||
+                DEBUG_OFFLINE_PLAY)
+        {
+            spawnNewTreeTimer = datingSettings.randomizeNewTreeTimer;
         }
     }
 
@@ -104,6 +112,20 @@ public class DatingHandler : MonoBehaviour {
 
         dateState = DateState.SelectTree;
         dateMinigameParent.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (GameLogic.PlayerRole is PlayerRole.DATING_SIMULATOR ||
+                DEBUG_OFFLINE_PLAY)
+        {
+            spawnNewTreeTimer -= Time.deltaTime;
+            if(spawnNewTreeTimer <= 0 && dateState != DateState.Date)
+            {
+                IntroduceNewSpecimenToGenePool();
+                spawnNewTreeTimer = datingSettings.randomizeNewTreeTimer;
+            }
+        }
     }
 
     /// <summary>
@@ -201,6 +223,8 @@ public class DatingHandler : MonoBehaviour {
         for (int i = 0; i < datingSettings.numChildrenPerDate; i++)
         {
             TreeStatblock child = DateQuoteOnQuote(trees[tree1Index], trees[tree2Index]);
+            float avarageGeneration = (trees[tree1Index].generation + trees[tree2Index].generation) / 2.0f;
+            child.generation = Mathf.FloorToInt(avarageGeneration) + 1;
 
             //Find open spot for child
             bool foundSpace = false;
@@ -349,5 +373,18 @@ public class DatingHandler : MonoBehaviour {
 
         dateState = DateState.SelectTree;
         dateMinigameParent.SetActive(false);
+    }
+
+    private void IntroduceNewSpecimenToGenePool()
+    {
+        for(int i = trees.Length-1; i >= 0; i--)
+        {
+            if (trees[i] != null)
+                continue;
+            trees[i] = GenerateRandomTreeStats();
+            DisplayTreeProfile(trees[i], treeButtons[i]);
+            treeButtons[i].TriggerAnimation("NewTree");
+            return;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using Photon.Pun;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,11 +8,13 @@ using UnityEngine.UI;
 /// This will be the main object keeping the visual/dating-character, which is generated from the
 /// shared character class.
 /// </summary>
-public class TreeButton : MonoBehaviour {
+public class TreeButton : MonoBehaviour
+{
     public Image faceImage;
     public Image trunkImage;
     public Image background;
     public Image backgroundPattern;
+    public TMP_Text generationLabel;
 
     [SerializeField] private GameObject highlightObject;
     [SerializeField] private Animator emoteAnimator;
@@ -23,65 +26,86 @@ public class TreeButton : MonoBehaviour {
     private TreeStatblock tree;
     private PhotonView photonView;
 
-    private void Awake() {
+    private void Awake()
+    {
         photonView = GetComponent<PhotonView>();
     }
 
-    public void Highlight(bool highlightOn) {
+    public void Highlight(bool highlightOn)
+    {
         highlightObject.SetActive(highlightOn);
         selectTreeButton.interactable = !highlightOn;
     }
 
-    public bool GetHighlight() {
+    public bool GetHighlight()
+    {
         return highlightObject.activeInHierarchy;
     }
 
-    public void UpdateProfile() {
-        if(tree == null) {
+    public void UpdateProfile()
+    {
+        if (tree == null)
+        {
             faceImage.sprite = null;
             trunkImage.sprite = null;
             background.color = Color.gray;
             backgroundPattern.sprite = null;
+            generationLabel.text = "";
         }
-        else {
+        else
+        {
             faceImage.sprite = tree.Face;
             trunkImage.sprite = tree.Trunk;
             background.color = tree.BackgroundCol;
             backgroundPattern.sprite = tree.BackgroundPattern;
             backgroundPattern.color = tree.PatternCol;
+            generationLabel.text = tree.generation.ToString();
         }
         selectTreeButton.interactable = tree != null;
     }
 
-    public void SetTree(TreeStatblock stats) {
-        if(stats == null) {
-            photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.AllBuffered, parameters: new int[0]);
+    public void SetTree(TreeStatblock stats)
+    {
+        if (stats == null)
+        {
+            object[] treeParams = new object[] { new int[0], 0 };
+            photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.AllBuffered, parameters: treeParams);
             return;
         }
-        photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.AllBuffered, parameters: stats.StatIndexes.ToArray());
+        else
+        {
+            object[] treeParams = new object[] { stats.StatIndexes.ToArray(), stats.generation };
+            photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.AllBuffered, parameters: treeParams);
+        }
+
     }
 
     /// <summary>
     /// Returns the tree attached to this button and un-attaches it.
     /// The button is empty afterwards.
-    public TreeStatblock PopTreeStats() {
+    public TreeStatblock PopTreeStats()
+    {
         TreeStatblock treeturnValue = tree;
         photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.All, parameters: new int[0]);
         return treeturnValue;
     }
 
-    public void TriggerAnimation(string triggerName) {
+    public void TriggerAnimation(string triggerName)
+    {
         emoteAnimator.SetTrigger(triggerName);
     }
 
     [PunRPC]
-    private void SetTreeProfileRPC(int[] statIndices) {
+    private void SetTreeProfileRPC(int[] statIndices, int generation)
+    {
         Debug.Log($"Tree Button {name} received {statIndices.Length} indices");
-        if(statIndices.Length == 0) {
+        if (statIndices.Length == 0)
+        {
             tree = null;
         }
-        else {
-            tree = new(statIndices.ToList());
+        else
+        {
+            tree = new(statIndices.ToList(), generation);
         }
 
         UpdateProfile();

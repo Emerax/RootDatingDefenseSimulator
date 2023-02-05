@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c7694e72bc6224da2273bddf1bb432, type: 3}
   m_Name: DatingSettings
   m_EditorClassIdentifier: 
+  numChildrenPerDate: 1
+  numStartTrees: 4
   matchingEmojis:
   - name: Dragon-Wizard
     emoji:
@@ -25,3 +27,15 @@ MonoBehaviour:
     emoji:
     - {fileID: 21300000, guid: 25329eaf3c336ec448f7f52ea15b756f, type: 3}
     - {fileID: 21300000, guid: b9b9f7fd50d4b78428b58b33c9f4581c, type: 3}
+  - name: Fire-Water
+    emoji:
+    - {fileID: 21300000, guid: d6106b9010fb4674d9cc95d05dc6dab3, type: 3}
+    - {fileID: 21300000, guid: 8ff1bbce7dc6d8248b6736290437ec41, type: 3}
+  - name: Mic-Music
+    emoji:
+    - {fileID: 21300000, guid: 2e51daebd89dcba43a1159093866b57c, type: 3}
+    - {fileID: 21300000, guid: c160bac951a711a488efd17ec6d1ebd8, type: 3}
+  - name: Unicorn-Rainbow
+    emoji:
+    - {fileID: 21300000, guid: a485aefee8eacf04498ca272d8a3df2b, type: 3}
+    - {fileID: 21300000, guid: 801e20a609332fa459dbd84745989391, type: 3}

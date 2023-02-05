@@ -21,6 +21,9 @@ public class TreeStatsSettings : ScriptableObject {
     [SerializeField]
     private List<float> sizeTiers = new();
 
+    public float attackByGenerationMultiplier = 0.75f;
+    public float sizeByGenerationMultiplier = 0.2f;
+
     private readonly List<Type> abilites = new() {
         typeof(RangedAttackAbility)
     };

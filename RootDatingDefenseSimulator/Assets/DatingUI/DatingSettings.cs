@@ -15,4 +15,5 @@ public class DatingSettings : ScriptableObject
     public int numChildrenPerDate = 1;
     public int numStartTrees = 4;
     public EmojiMatches[] matchingEmojis;
+    public float randomizeNewTreeTimer = 10;
 }
