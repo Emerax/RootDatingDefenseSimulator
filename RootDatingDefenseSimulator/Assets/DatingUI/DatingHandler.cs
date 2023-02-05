@@ -299,6 +299,8 @@ public class DatingHandler : MonoBehaviour {
         }
         else {
             //Update dating profile pictures.
+            dateFeedbackAnimator.SetTrigger("DateFail");
+            yield return new WaitForSeconds(1.2f);
             EndDateAndReturnDaters();
         }
     }
