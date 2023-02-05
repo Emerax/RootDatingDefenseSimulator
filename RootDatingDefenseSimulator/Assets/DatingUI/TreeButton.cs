@@ -65,8 +65,7 @@ public class TreeButton : MonoBehaviour {
     /// The button is empty afterwards.
     public TreeStatblock PopTreeStats() {
         TreeStatblock treeturnValue = tree;
-        tree = null;
-        UpdateProfile();
+        photonView.RPC(nameof(SetTreeProfileRPC), RpcTarget.All, parameters: new int[0]);
         return treeturnValue;
     }
 
