@@ -1613,7 +1613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6515153392877669482, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
       propertyPath: DEBUG_OFFLINE_PLAY
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6840186937469021846, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
       propertyPath: m_AnchorMax.y
