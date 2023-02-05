@@ -394,3 +394,8 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+RootDatingDefenseSimulator/Assets/Splines/MeshUtils.cs
+RootDatingDefenseSimulator/Assets/Splines/MeshUtils.cs.meta
+RootDatingDefenseSimulator/Assets/Splines/SplineMesh.cs
+RootDatingDefenseSimulator/Assets/Splines/SplineMesh.cs.meta
+RootDatingDefenseSimulator/Assets/Splines/SplinesTest.cs
