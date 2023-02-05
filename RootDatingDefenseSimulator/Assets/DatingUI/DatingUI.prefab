@@ -348,6 +348,7 @@ MonoBehaviour:
   - {fileID: 1820065558949766613}
   - {fileID: 7970594427533549565}
   dateMinigameParent: {fileID: 5278101653930837016}
+  dateFeedbackAnimator: {fileID: 7762632370871741874}
   datePromptBubble: {fileID: 6215654569678576697}
   dateAnswerBubble:
   - {fileID: 8228195911649265770}
