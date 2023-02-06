@@ -21,6 +21,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     public static GameState GameState { get; private set; }
 
     private bool mainPlayersAssigned = false;
+    private bool isDatingSimPlayerReady = false;
 
     private void Awake() {
         Assert.IsNotNull(forest);
@@ -99,11 +100,37 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     }
 
     private void InitGame() {
-        forest.Init(GameOverRPC);
+        Debug.Log($"Initializing game...");
+        forest.Init(OnGameOver);
         towerDefensor.Init();
-        waveManager.Init();
         UI.Initialize();
         PhotonNetwork.IsMessageQueueRunning = true;
+        photonView.RPC(nameof(OnPlayerReady), RpcTarget.All, PlayerRole);
+    }
+
+
+    [PunRPC]
+    private void OnPlayerReady(PlayerRole newPlayerRole) {
+        Debug.Log($"Player {newPlayerRole} ready!");
+
+        if(newPlayerRole == PlayerRole.DATING_SIMULATOR) {
+            isDatingSimPlayerReady = true;
+        }
+
+        if(PlayerRole == PlayerRole.TOWER_DEFENSER) {
+            if(isDatingSimPlayerReady) {
+                photonView.RPC(nameof(GameStartRPC), RpcTarget.All);
+            }
+            else {
+                Debug.Log($"Waiting for Dating Simulator player to join...");
+            }
+        }
+    }
+
+    [PunRPC]
+    private void GameStartRPC() {
+        waveManager.Init();
+        Debug.Log($"Game started!");
     }
 
     private void OnGameOver() {
