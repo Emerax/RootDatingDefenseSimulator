@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// This will be the main object keeping the visual/dating-character, which is generated from the
 /// shared character class.
 /// </summary>
-public class TreeButton : MonoBehaviour
+public class TreeButton : MonoBehaviourPun
 {
     public Image faceImage;
     public Image trunkImage;
@@ -24,11 +24,10 @@ public class TreeButton : MonoBehaviour
     public bool IsEmpty => tree == null;
 
     private TreeStatblock tree;
-    private PhotonView photonView;
 
-    private void Awake()
-    {
-        photonView = GetComponent<PhotonView>();
+    public void Clear() {
+        tree = null;
+        UpdateProfile();
     }
 
     public void Highlight(bool highlightOn)

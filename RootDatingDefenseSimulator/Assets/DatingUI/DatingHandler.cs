@@ -57,6 +57,14 @@ public class DatingHandler : MonoBehaviour {
     public void Clear() {
         roleText.SetText("");
         statusText.SetText("");
+
+        foreach(TreeButton treeButton in treeButtons) {
+            treeButton.Clear();
+        }
+        foreach(TreeButton treeProfile in selectedProfiles) {
+            treeProfile.gameObject.SetActive(false);
+        }
+        dateMinigameParent.SetActive(false);
     }
 
     /// <summary>
