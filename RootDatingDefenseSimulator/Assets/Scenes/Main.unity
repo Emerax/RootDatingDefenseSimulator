@@ -1380,13 +1380,13 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5873068352114111395, guid: 65dbd583c3f56a741886cecad5ec2477, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 200
+    - target: {fileID: 5478025988448063843, guid: 65dbd583c3f56a741886cecad5ec2477, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5873068352114111395, guid: 65dbd583c3f56a741886cecad5ec2477, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -150
+    - target: {fileID: 5511855169919219483, guid: 65dbd583c3f56a741886cecad5ec2477, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8159719456014654632, guid: 65dbd583c3f56a741886cecad5ec2477, type: 3}
       propertyPath: m_Name

@@ -1,8 +1,10 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 public class GameLogic : MonoBehaviourPunCallbacks {
     [SerializeField]
@@ -16,6 +18,12 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     [SerializeField]
     private DatingHandler UI;
     [SerializeField]
+    private List<GameObject> gameStartElements;
+    [SerializeField]
+    private TMP_InputField roomNameField;
+    [SerializeField]
+    private Button startButton;
+    [SerializeField]
     private Canvas gameOverCanvas;
     [SerializeField]
     private TMP_Text gameVersionText;
@@ -25,6 +33,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     public static PlayerRole PlayerRole { get; private set; } = PlayerRole.NONE;
     public static GameState GameState { get; private set; }
 
+    private string roomName = "Public";
     private bool mainPlayersAssigned = false;
     private bool isDatingSimPlayerReady = false;
 
@@ -34,9 +43,16 @@ public class GameLogic : MonoBehaviourPunCallbacks {
         Assert.IsNotNull(towerDefensor);
         Assert.IsNotNull(waveManager);
         Assert.IsNotNull(UI);
+        Assert.IsTrue(gameStartElements.Count > 0);
+        Assert.IsNotNull(roomNameField);
+        Assert.IsNotNull(startButton);
+        Assert.IsNotNull(gameOverCanvas);
         Assert.IsNotNull(gameVersionText);
         PhotonNetwork.IsMessageQueueRunning = false;
         gameOverCanvas.gameObject.SetActive(false);
+        foreach(GameObject element in gameStartElements) {
+            element.SetActive(true);
+        }
         UI.Clear();
         gameVersionText.SetText($"v {photonServerSettings.AppSettings.AppVersion}");
 
@@ -44,18 +60,29 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     }
 
     private void Start() {
-        PhotonNetwork.ConnectUsingSettings();
+        startButton.onClick.AddListener(StartGame);
     }
 
     private void Update() {
-        if(Input.GetKeyDown(KeyCode.Space)) {
-            Debug.Log("You: Hello!");
-            photonView.RPC(nameof(SayHelloRPC), RpcTarget.Others);
+        if(Input.GetKeyDown(KeyCode.Return)) {
+            StartGame();
+        }
+    }
+
+    private void StartGame() {
+        if(!string.IsNullOrEmpty(roomNameField.text)) {
+            roomName = roomNameField.text;
+        }
+        PhotonNetwork.ConnectUsingSettings();
+
+        foreach(GameObject element in gameStartElements) {
+            element.SetActive(false);
         }
     }
 
     public override void OnConnectedToMaster() {
-        PhotonNetwork.JoinRandomOrCreateRoom();
+        Debug.Log($"Connected with app version {PhotonNetwork.AppVersion}");
+        PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions(), TypedLobby.Default);
     }
 
     public override void OnJoinedRoom() {
@@ -65,7 +92,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
             AssignPlayerTypeRPC(PlayerRole.TOWER_DEFENSER);
         }
 
-        Debug.Log($"Joined room as player {PhotonNetwork.LocalPlayer}");
+        Debug.Log($"Joined room {PhotonNetwork.CurrentRoom.Name} as player {PhotonNetwork.LocalPlayer}");
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer) {
@@ -112,7 +139,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
         Debug.Log($"Initializing game...");
         forest.Init(OnGameOver);
         towerDefensor.Init();
-        UI.Initialize(PhotonNetwork.LocalPlayer.NickName);
+        UI.Initialize($"Room {roomName}\n{PhotonNetwork.LocalPlayer.NickName}");
 
         if(PlayerRole == PlayerRole.TOWER_DEFENSER) {
             UI.SetStatusText("Waiting for Dating Simulator player...");
