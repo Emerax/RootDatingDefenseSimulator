@@ -1,9 +1,12 @@
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 public class GameLogic : MonoBehaviourPunCallbacks {
+    [SerializeField]
+    private ServerSettings photonServerSettings;
     [SerializeField]
     private FunGoernForest forest;
     [SerializeField]
@@ -14,6 +17,8 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     private DatingHandler UI;
     [SerializeField]
     private Canvas gameOverCanvas;
+    [SerializeField]
+    private TMP_Text gameVersionText;
 
     public static bool isGameOver = false;
 
@@ -24,13 +29,16 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     private bool isDatingSimPlayerReady = false;
 
     private void Awake() {
+        Assert.IsNotNull(photonServerSettings);
         Assert.IsNotNull(forest);
         Assert.IsNotNull(towerDefensor);
         Assert.IsNotNull(waveManager);
         Assert.IsNotNull(UI);
+        Assert.IsNotNull(gameVersionText);
         PhotonNetwork.IsMessageQueueRunning = false;
         gameOverCanvas.gameObject.SetActive(false);
         UI.Clear();
+        gameVersionText.SetText($"v {photonServerSettings.AppSettings.AppVersion}");
 
         isGameOver = false;
     }
