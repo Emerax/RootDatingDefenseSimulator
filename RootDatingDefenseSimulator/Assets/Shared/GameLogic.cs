@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -33,7 +34,8 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     public static bool isGameOver = false;
 
     public static PlayerRole PlayerRole { get; private set; } = PlayerRole.NONE;
-    public static GameState GameState { get; private set; }
+    public static Action GameStarted;
+    public static Action GameOver;
 
     private string roomName = "Public";
     private bool mainPlayersAssigned = false;
@@ -80,6 +82,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
         foreach(GameObject element in gameStartElements) {
             element.SetActive(false);
         }
+        GameStarted?.Invoke();
     }
 
     public override void OnConnectedToMaster() {
@@ -209,6 +212,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
         Debug.Log("GAME OVER MAAAN");
         isGameOver = true;
         gameOverCanvas.gameObject.SetActive(true);
+        GameOver?.Invoke();
     }
 
     [PunRPC]

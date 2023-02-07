@@ -1761,6 +1761,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfc536fa46dc92347aea123d672e0516, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minAlpha: 0.1
+  maxAlpha: 1
+  alphaDeltaPerSecond: 1.5
 --- !u!1 &5478025988448063843
 GameObject:
   m_ObjectHideFlags: 0
