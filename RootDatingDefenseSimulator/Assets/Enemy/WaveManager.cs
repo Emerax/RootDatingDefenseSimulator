@@ -37,6 +37,10 @@ public class WaveManager : MonoBehaviour {
         isInitalized = true;
     }
 
+    public void Uninitialize() {
+        isInitalized = false;
+    }
+
     private void Update() {
         if(GameLogic.PlayerRole != PlayerRole.TOWER_DEFENSER || !isInitalized) {
             return;

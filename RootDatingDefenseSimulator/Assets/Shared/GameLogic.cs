@@ -197,6 +197,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
     }
 
     private void OnGameOver() {
+        waveManager.Uninitialize();
         photonView.RPC(nameof(GameOverRPC), RpcTarget.All);
     }
 
