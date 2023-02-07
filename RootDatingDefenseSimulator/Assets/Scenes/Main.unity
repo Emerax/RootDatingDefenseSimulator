@@ -1011,10 +1011,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DatingUI
       objectReference: {fileID: 0}
-    - target: {fileID: 2943633512989173681, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3199514969654878220, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1031,10 +1027,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3340401846779704318, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4073637054484604051, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
       propertyPath: sceneViewId
       value: 20
@@ -1042,10 +1034,6 @@ PrefabInstance:
     - target: {fileID: 5281774279896028047, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
       propertyPath: sceneViewId
       value: 23
-      objectReference: {fileID: 0}
-    - target: {fileID: 5362149987702877946, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -6.7633057
       objectReference: {fileID: 0}
     - target: {fileID: 5885578732612489550, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
       propertyPath: sceneViewId
@@ -1058,10 +1046,6 @@ PrefabInstance:
     - target: {fileID: 6285940603661441380, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
       propertyPath: sceneViewId
       value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 6515153392877669482, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
-      propertyPath: DEBUG_OFFLINE_PLAY
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6840186937469021846, guid: ce7fbc4b9ccbf1e40a8713a536a774cb, type: 3}
       propertyPath: m_AnchorMax.y

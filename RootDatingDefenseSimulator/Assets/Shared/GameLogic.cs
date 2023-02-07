@@ -30,6 +30,7 @@ public class GameLogic : MonoBehaviourPunCallbacks {
         Assert.IsNotNull(UI);
         PhotonNetwork.IsMessageQueueRunning = false;
         gameOverCanvas.gameObject.SetActive(false);
+        UI.Clear();
 
         isGameOver = false;
     }
@@ -103,7 +104,18 @@ public class GameLogic : MonoBehaviourPunCallbacks {
         Debug.Log($"Initializing game...");
         forest.Init(OnGameOver);
         towerDefensor.Init();
-        UI.Initialize();
+        UI.Initialize(PhotonNetwork.LocalPlayer.NickName);
+
+        if(PlayerRole == PlayerRole.TOWER_DEFENSER) {
+            UI.SetStatusText("Waiting for Dating Simulator player...");
+        }
+        else if(PlayerRole == PlayerRole.TOWER_DEFENSER) {
+            UI.SetStatusText("Waiting for Tower Defenser player...");
+        }
+        else {
+            UI.SetStatusText("Waiting for game to start...");
+        }
+
         PhotonNetwork.IsMessageQueueRunning = true;
         photonView.RPC(nameof(OnPlayerReady), RpcTarget.All, PlayerRole);
     }
@@ -129,8 +141,19 @@ public class GameLogic : MonoBehaviourPunCallbacks {
 
     [PunRPC]
     private void GameStartRPC() {
+        UI.SetStatusText($"Waiting for initial wave...");
+        waveManager.OnNewWave += OnNewWave;
         waveManager.Init();
         Debug.Log($"Game started!");
+    }
+
+    private void OnNewWave(int waveIndex) {
+        photonView.RPC(nameof(OnNewWaveRPC), RpcTarget.All, waveIndex);
+    }
+
+    [PunRPC]
+    private void OnNewWaveRPC(int waveIndex) {
+        UI.SetStatusText($"Wave {waveIndex}");
     }
 
     private void OnGameOver() {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,9 @@ public class DatingHandler : MonoBehaviour {
     [SerializeField] private DatingSettings datingSettings;
 
     [SerializeField] private TreeStatsSettings profileSettings;
+
+    [SerializeField] private TMP_Text roleText;
+    [SerializeField] private TMP_Text statusText;
 
     [SerializeField] private TreeButton[] treeButtons;
     [SerializeField] private TreeButton[] selectedProfiles;
@@ -50,12 +54,18 @@ public class DatingHandler : MonoBehaviour {
         }
     }
 
+    public void Clear() {
+        roleText.SetText("");
+        statusText.SetText("");
+    }
+
     /// <summary>
     /// Debug class, later we'll read the profiles from a list of Characters 
     /// which will be shared between TD and DS.
     /// </summary>
     /// <param name="numCharacters"></param>
-    public void Initialize() {
+    public void Initialize(string playerRole) {
+        roleText.SetText(playerRole);
         datingMain.SetActive(true);
         numCharacters = treeButtons.Length;
 
@@ -128,6 +138,10 @@ public class DatingHandler : MonoBehaviour {
                 spawnNewTreeTimer = datingSettings.randomizeNewTreeTimer;
             }
         }
+    }
+
+    public void SetStatusText(string status) {
+        statusText.SetText(status);
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ public class WaveManager : MonoBehaviour {
 
     [SerializeField]
     private List<EnemySpawnPoint> enemySpawnPoints;
+
+    public Action<int> OnNewWave;
 
     private bool isInitalized = false;
     private int waveIndex = -1;
@@ -43,8 +46,10 @@ public class WaveManager : MonoBehaviour {
             // Wait
         }
         else if(timeUntilNextWave <= 0) {
+
             timeUntilNextWave = gameSettings.timeBetweenWaves;
             ++waveIndex;
+            OnNewWave?.Invoke(waveIndex);
             StartCoroutine(SpawnWave());
         }
         else {
